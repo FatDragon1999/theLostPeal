@@ -8,7 +8,6 @@
 		<link rel="stylesheet" href="assets/css/style.css">
 		<link rel="stylesheet" href="assets/css/style1.css">
 		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/fsvs.js"></script>
 		<script src="assets/js/main.js"></script>
 		<script src="assets/js/original.js"></script>
 		<style>
@@ -37,20 +36,35 @@
 				100% {;}
 			}
 			#img1{	
-				animation:myfirst 0.6s;-webkit-animation:myfirst 0.6s;
+				animation:myfirst 0.6s;-webkit-animation:myfirst 0.6s;position:relative;
 			}
 			#img2{
-				animation:myfirst 0.6s;-webkit-animation:myfirst 0.6s;
+				animation:myfirst 0.6s;-webkit-animation:myfirst 0.6s;position:relative;
 			}
 			#img3{
-				animation:myfirst 0.6s;-webkit-animation:myfirst 0.6s;
+				animation:myfirst 0.6s;-webkit-animation:myfirst 0.6s;position:relative;
 			}
-
-			
+			#img3:hover{
+				opacity: 0.3;
+			}
+			#img2:hover{
+				opacity: 0.3;
+			}
+			#img1:hover{
+				opacity: 0.3;
+			}
+			.extralist{
+				background: #000000;
+				
+			}
+			.cd{
+				height:220px;
+				margin:10px;
+			}
 		</style>
 	</head>
 	<body  οnkeydοwn="keyLogin();">
-		<div id="preloading" style="position:absolute;display:block;width:100%;height:100%;background-color: #000;"></div>
+		<div id="preloading" style="position:absolute;display:block;width:100%;height:100%;background-color: #000;z-index:9999;"><img style="position:absolute;top:15%;height:60%;width:40%;left:30%" src="img/loading.gif" /></div>
 		<div id="fsvs-body">
 			<div class="slide" id="fsvs-initial-setup">
 				<div class="section">
@@ -59,7 +73,7 @@
 							<div class="container">
 								<div class="mymenu" onclick="navtomain()"></div>
 								<div class="mymenutext" onclick="navtomain()"></div>
-								<!--<img src="img/icon.png" style="bottom:0%;" width="50px" height= "50px" onclick="main.html" alt="">-->
+
 								
 								<input id="inputmymenu" type="text">
 								<div class="login-button" onclick="startsearch()"><h>拾取明珠</h></div>
@@ -68,17 +82,83 @@
 						<div class="main">
 							<div class="box">
 								<div class="box-l">
-									<!--<img src="img/img01.png" alt="">-->
+
 									<iframe width="100%" id="banner" src="main.html"></iframe>
 								</div>
 								<div class="box-r" id="cirtizen">
 									<hr style="border:1px solid #333">
 									<div class="text">
-										<p>悠悠华夏，几千年的文明沉淀，几千年的岁月蹉跎。在这片千古土地生活了几千年的中华民族在生产生活之中
-										孕育了属于他们自己的文化符号。有如语言文字，风俗习惯，亦或是非物质文化遗产。而纵横千里苍茫华夏，
-										这些独特的传统文化标识犹如一颗颗璀璨而夺目的明珠，镶嵌在中国广袤的版图之中。</p>
-										<p>散落的明珠--<br>中国传统文化地图</p><!--<p></p>-->								
-										<img src="img/pattern-1.png" />
+
+										<ul style="position:relative;display:block;list-style:none;width:100%;height:100%">	
+											<li class="commonimg1 cd" style="position:relative;">
+												
+												<div class="title">
+													<span>少数民族分布</span>
+													<img src="img/menu.png" alt="" class="menu1" id="menu1id">
+													<div id="navid1" class="nav" style="height:170px;z-index: 2;">
+														<ul>
+															<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/北方.jpg','minNationNorth.html')"><p>北方</p></li>
+															<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/西北.jpg','minNationWN.html')"><p>西北</p></li>
+															<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/南方.jpg','minNationSouth.html')"><p>南方</p></li>
+															<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/藏族.jpg','minNationQing.html')"><p>青藏地区</p></li>									
+															
+														</ul>
+													</div>
+												</div>
+												
+												<div id="lastimg1" class="nav"></div>
+												<div id='img1cover' class="list extralist">								
+													<img src="img/img02.png" onclick="alert(\"error\")"  id="img1" alt="">
+													
+												</div>
+												
+												
+												
+											</li>
+											<li class="commonimg2 cd" style="position:relative;">
+												<div class="title">
+													<span>少数民族语言分布</span>
+													<img src="img/menu.png" alt="" class="menu2" id="menu2id">
+													<div id="navid2" class="nav" style="height:170px;z-index: 2;">
+														<ul>
+															<li onclick="changedisplay('img2','img2cover','img2','img/语言/濒危-赫哲族.jpg','almostDL2.html')"><p>濒危语言</p></li>
+															<li onclick="changedisplay('img2','img2cover','img2','img/语言/有危险-鄂温克族.jpg','halfDieLang2.html')"><p>接近濒危的语言</p></li>
+															<li onclick="changedisplay('img2','img2cover','img2','img/语言/活力-壮族.jpg','aliveLang2.html')"><p>有活力的语言</p></li>						
+										
+														</ul>
+													</div>
+												</div>
+												
+												<div id="lastimg2" class="nav"></div>
+												<div id='img2cover' class="list extralist">
+													<img src="img/img03.png"  onclick="" id="img2" alt="">
+													
+												</div>
+												
+											</li>
+											<li class="commonimg3 cd" style="position:relative;">
+												<div class="title">
+													<span>世界级非物质文化遗产分布</span>
+													<img src="img/menu.png" alt="" class="menu3" id="menu3id">
+													<div id="navid3" class="nav" style="height:170px;z-index: 2;">
+														<ul>
+															<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/北方——蒙古族呼麦.jpg','inheritanceNorth.html')"><p>北方地区</p></li>
+															<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/西北——木卡姆艺术.jpg','inheritanceWN.html')"><p>西北地区</p></li>
+															<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/南方——粤剧.jpg','inheritanceSouth.html')"><p>南方地区</p></li>
+															<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/藏族——藏医.jpg','inheritanceQing.html')"><p>青藏地区</p></li>
+														</ul>
+													</div>
+												</div>
+												
+												<div id="lastimg3" class="nav"></div>
+												<div id='img3cover' class="list extralist" >											
+													<img style="position:relative" src="img/img04.png"  onclick="" id="img3"  alt="">
+													
+												</div>
+												
+											</li>
+										</ul>
+										
 									</div>
 								</div>
 							</div>
@@ -90,92 +170,12 @@
 				</div>
 
 			</div>
-			<div class="slide" id="basic-html-setup">
-				<div class="section">
-
-					<div class="w1400 second">
-						<div class="foot">
-							<p>散落的明珠——中国传统文化地图</p>
-						</div>
-						<ul class="list-box section2">
-							<li class="commonimg1 cd">
-								<div class="title">
-									<span>少数民族分布</span>
-									<img src="img/menu.png" alt="" class="menu1" id="menu1id">
-									<div id="navid1" class="nav">
-										<ul>
-											<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/北方.jpg','minNationNorth.html')"><p>北方地区</p></li>
-											<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/西北.jpg','minNationWN.html')"><p>西北地区</p></li>
-											<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/南方.jpg','minNationSouth.html')"><p>南方地区</p></li>
-											<li onclick="changedisplay('img1','img1cover','img1','img/少数民族/藏族.jpg','minNationQing.html')"><p>青藏地区</p></li>									
-											
-										</ul>
-									</div>
-								</div>
-								<div id="img1cover" class="cover nav"></div>
-								<div id="lastimg1" class="nav"></div>
-								<div class="list">								
-									<img src="img/img02.png" onclick="alert(\"error\")" onmouseover = "func('img1cover')"  onmouseout = "func1('img1cover')" id="img1" alt="">
-								</div>
-								
-							</li>
-							<li class="commonimg2 cd">
-								<div class="title">
-									<span>少数民族语言分布</span>
-									<img src="img/menu.png" alt="" class="menu2" id="menu2id">
-									<div id="navid2" class="nav">
-										<ul>
-											<li onclick="changedisplay('img2','img2cover','img2','img/语言/濒危-赫哲族.jpg','almostDL2.html')"><p>濒危语言</p></li>
-											<li onclick="changedisplay('img2','img2cover','img2','img/语言/有危险-鄂温克族.jpg','halfDieLang2.html')"><p>接近濒危的语言</p></li>
-											<li onclick="changedisplay('img2','img2cover','img2','img/语言/活力-壮族.jpg','aliveLang2.html')"><p>有活力的语言</p></li>						
-
-										</ul>
-									</div>
-								</div>
-								<div id="img2cover" class="cover nav"></div>
-								<div id="lastimg2" class="nav"></div>
-								<div class="list">
-									<img src="img/img03.png"  onclick="" onmouseover = "func('img2cover')"  onmouseout = "func1('img2cover')" id="img2" alt="">
-								</div>
-								
-							</li>
-							<li class="commonimg3 cd">
-								<div class="title">
-									<span>世界级非物质文化遗产分布</span>
-									<img src="img/menu.png" alt="" class="menu3" id="menu3id">
-									<div id="navid3" class="nav">
-										<ul>
-											<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/北方——蒙古族呼麦.jpg','inheritanceNorth.html')"><p>北方地区</p></li>
-											<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/西北——木卡姆艺术.jpg','inheritanceWN.html')"><p>西北地区</p></li>
-											<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/南方——粤剧.jpg','inheritanceSouth.html')"><p>南方地区</p></li>
-											<li onclick="changedisplay('img3','img3cover','lastimg3','img/非遗/藏族——藏医.jpg','inheritanceQing.html')"><p>青藏地区</p></li>
-										</ul>
-									</div>
-								</div>
-								<div id="img3cover" class="cover nav"></div>
-								<div id="lastimg3" class="nav"></div>
-								<div class="list" >
-									
-									<img src="img/img04.png"  onclick="" id="img3" onmouseover = "func('img3cover')"  onmouseout = "func1('img3cover')" alt="">
-								</div>
-								
-							</li>
-						</ul>
-						<div class="text2">
-							<img src="img/text.png" alt="" width="140">
-						</div>
-						<div class="copy">
-							<img src="img/copyright.png" id="lastelement" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
+			
 		</div>
 		
 	</body>
 	<script>
 		
-		document.getElementById("banner").height = document.getElementById("cirtizen").getBoundingClientRect().height;
 		
 		document.onkeydown = function (e) {
 			if (!e) e = window.event;
@@ -183,13 +183,19 @@
 				startsearch();
 			}
 		}
-
-		if (document.readyState === 'complete') {
+		
+		document.getElementById("banner").height = document.getElementById("cirtizen").getBoundingClientRect().height;
+		
+		window.onload=function() {
 			  // 页面已完全加载 在这里隐藏 loading
+			
 			document.getElementById('preloading').style.display="none";
-			
+				
+
 		}
-			
+		
+		
+
 		
 	</script>
 </html>

@@ -38,6 +38,8 @@ jQuery(document).ready(function($) {
 				$('.menu1').click(function() {
 					if ($(".menu1").next().is(':hidden')) {
 						$(".menu1").next().show();
+						
+						
 						$(".menu2").next().hide();
 						$(".menu3").next().hide();
 						$(".menu1").attr("src", 'img/close.png');
