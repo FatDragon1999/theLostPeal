@@ -40,35 +40,35 @@
         }
 
         /* 消息内容 */
-		.BMap_bubble_content {
-			background-color:white;
-			padding-left:10px;
-			padding-right: 10px;
-			padding-top:5px;
-			padding-bottom:10px;
-		}
+	.BMap_bubble_content {
+		background-color:white;
+		padding-left:10px;
+		padding-right: 10px;
+		padding-top:5px;
+		padding-bottom:10px;
+	}
 
         /*地图标题*/
-		.BMap_bubble_title {
-			color:white;
-			font-size:13px;
-			font-weight:bold;
-			text-align: center;
-			border-bottom:1px solid white;
-			background-color:	#B0C4DE;
-			line-height:30px !important;
-		}
+	.BMap_bubble_title {
+		color:white;
+		font-size:13px;
+		font-weight:bold;
+		text-align: center;
+		border-bottom:1px solid white;
+		background-color:	#B0C4DE;
+		line-height:30px !important;
+	}
 
 		/* 左上角删除按键 */
-		.BMap_pop img {
-            color:transparent;
-			top:45px !important;
-			/*left:215px !important;*/
-			margin-left:-10px;
-		}
+	.BMap_pop img {
+            	color:transparent;
+		top:45px !important;
+		/*left:215px !important;*/
+		margin-left:-10px;
+	}
 
         .BMap_top {
-			display:none;
+		display:none;
 		}
         .BMap_center{
             display: none;
@@ -78,10 +78,10 @@
         }
 
         /* 隐藏边角 */
-		.BMap_pop div:nth-child(1) div {
-			display:none;
-		}
-		.BMap_pop div:nth-child(3){
+	.BMap_pop div:nth-child(1) div {
+		display:none;
+	}
+	.BMap_pop div:nth-child(3){
             display: none;
         }
         .BMap_pop div:nth-child(5){
@@ -239,9 +239,9 @@
             map.openInfoWindow(infoWindow,point);
         }
 
-        map.addEventListener("click",function(e){
-		    alert('您所点击处经纬度为' + e.point.lng + "," + e.point.lat);
-	    });
+        //map.addEventListener("click",function(e){
+		    //alert('您所点击处经纬度为' + e.point.lng + "," + e.point.lat);
+	    //});
 
         // 复杂的自定义覆盖物
         function ComplexCustomOverlay(point, text, mouseoverText){
