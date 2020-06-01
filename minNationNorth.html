@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>北方地区少数民族分布图</title>
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        .anchorBL{
+            display: none;
+        }
+
+        @font-face { 
+            font-family: '新字体';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			left: 85%;
+			top: 8%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+        .myTitle2{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			left: 90%;
+			top: 8%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:white;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			border-bottom:1px solid white;
+			background-color:	#B0C4DE;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color:transparent;
+			top:45px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+        .BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+
+        /* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+       
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+   
+    </style>
+</head>
+<body>
+    <p class="myTitle">散<br>落<br>的<br>明<br>珠<br><br></p>
+    <p class="myTitle2">北<br>方<br>地<br>区<br>少<br>数<br>民<br>族<br>分<br>布<br>地<br>图<br></p>
+    <div id="map"></div>
+    <canvas id="canvas"></canvas>
+
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=m5YH0l8iZEk3sNPWTCSyuC9uiuxmnxym"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?type=webgl&v=1.0&ak=m5YH0l8iZEk3sNPWTCSyuC9uiuxmnxym"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+
+
+    <script type="text/javascript">
+        // 百度地图API功能
+        var map = new BMap.Map("map", {
+            enableMapClick: false
+        });    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(126.449626,43.560232), 6);  // 初始化地图,设置中心点坐标和地图级别
+        //map.enableScrollWheelZoom(false); // 开启鼠标滚轮缩放
+        madeBoundary();
+        map.setMapStyle({
+            style: 'midnight'
+        });
+
+        function madeBoundary(){
+            /*var datas = new Array("北京市-#ff665599","山东省-#559955","黑龙江省-#4682B4","辽宁省-#7AC5CD",
+                                  "天津市-#1199cc","河北省-#1199cc","吉林省-#1199cc","山西省-#1199cc",
+                                  "亳州市-#E6E6FA","淮北市-#E6E6FA","宿州市-#E6E6FA","阜阳市-#E6E6FA",
+                                  "徐州市-#87CEFA","连云港市-#87CEFA","宿迁市-#87CEFA","西安市-#87CEFA",
+                                  "宝鸡市-#1199cc","咸阳市-#1199cc","铜川市-#1199cc","渭南市-#1199cc",
+                                  "延安市-#1199cc","榆林市-#1199cc","郑州市-#F0FFFF","开封市-#F0FFFF",
+                                  "洛阳市-#F0FFFF","平顶山市-#F0FFFF","安阳市-#F0FFFF","鹤壁市-#F0FFFF",
+                                  "新乡市-#F0FFFF","焦作市-#F0FFFF","濮阳市-#F0FFFF","许昌市-#F0FFFF",
+                                  "漯河市-#F0FFFF","三门峡市-#F0FFFF","商丘市-#F0FFFF","周口市-#F0FFFF",
+                                  "驻马店市-#F0FFFF","济源市-#F0FFFF"
+                                  );*/
+            var datas = new Array("北京市","山东省","黑龙江省","辽宁省",
+                                  "天津市","河北省","吉林省","山西省",
+                                  "亳州市","淮北市","宿州市","阜阳市",
+                                  "徐州市","连云港市","宿迁市","西安市",
+                                  "宝鸡市","咸阳市","铜川市","渭南市",
+                                  "延安市","榆林市","郑州市","开封市",
+                                  "洛阳市","平顶山市","安阳市","鹤壁市",
+                                  "新乡市","焦作市","濮阳市","许昌市",
+                                  "漯河市","三门峡市","商丘市","周口市",
+                                  "驻马店市","济源市");
+            var bdary = new BMap.Boundary();
+            for(var i = 0;i < datas.length;i++){
+                getBoundary(datas[i],bdary);
+            }
+        }
+
+        function getBoundary(data,bdary){
+            //data = data.split("-");
+            bdary.get(data,function(rs){
+                //map.clearOverlays();
+                var count = rs.boundaries.length;
+                if(count == 0){
+                    alert('未能获取当前输入行政区域');
+                    return;
+                }
+                var pointArray = [];
+                for(var i = 0;i < count;i++){
+                    var ply = new BMap.Polygon(rs.boundaries[i],{strokeWeight:1,strokeColor:"#DCDCDC",fillOpacity:0.4,fillColor:"#87CEFA"});
+                    map.addOverlay(ply);
+                    pointArray = pointArray.concat(ply.getPath());
+                }
+                //map.setViewport(pointArray);  //调整视图
+                //addlabel();
+            });
+        }
+
+        /*setTimeout(function(){
+            getBoundary();
+        },3000);*/ //三秒后切换
+
+        //var size = new BMap.Size(10, 20);   //控件位置
+        //map.addControl(new BMap.CityListControl({
+        //    anchor: BMAP_ANCHOR_TOP_LEFT,
+        //    offset: size,
+            // 切换城市之前事件
+            //onChangeBefore: function(){
+                //alert('即将切换到您选择的城市');
+            //},
+            // 切换城市之后事件
+            //onChangeAfter:function(){
+                //alert('已切换到您选择的城市');
+            //}
+        //}));
+
+        //map.addEventListener("click",function(e){
+		//    alert('您所点击处经纬度为' + e.point.lng + "," + e.point.lat);
+	    //});
+
+        var data_info = [[128.657302,43.1979,"朝鲜","朝鲜族一直坚持世袭罔替的原则，他们注重礼仪文化，有一套属于自己的礼仪操守，如用餐礼仪、节庆礼仪、千人礼仪等。发展到今天，朝鲜族的礼仪与汉族礼仪不断的发展交融，出现了新的礼仪标准，但是大概的基础还是建立在古代朝鲜族礼仪的基础之上。"],
+                         [123.726827,42.138922,"满族","满族人口众多，在2010年，约有1041万人口，在我国占有重要的地位。其实在我国古代，满族同样有着重要的意义，在西周时期，满族就已经有了生产活动，是我国历史最悠久的民族之一。在清朝建立以后，满族逐渐对文字进行完善，建立了属于他们自己的文字，叫女真文字。"],
+                         [125.308994,43.840538,"蒙古族","蒙古族是草原上的游牧民族，与今天的蒙古族有很大的区别。古蒙古族由鲜卑族演变而来。1271年，蒙古族成立了蒙古大汗国，忽必烈称大元皇帝。元朝创立的行省制度沿用至今。也是在这个时期，蒙古族得到了飞速的发展，直到清朝，蒙古族的版图才逐渐缩小，现居我国北方。"],
+                         [116.331113,39.881607,"北京：以汉族为主体的多民族城市","北京作为中国首都，是年轻人打拼首选，因此相比于其他省份在京少数民族人口年龄构成较轻。其中以满族人口最多，占了北京少数民族人口的40%以上，回族、蒙古族、朝鲜族等北方少数民族人口比重也相对较高。随着经济发展，越来越多少数民族人口向北京迁徙。"]];
+        var data_info2 = [[123.874005,47.27684,"达斡尔族（人数较少）","达斡尔族主要分布于内蒙古自治区。他们能征善战，后金为入关巩固后方，三征索伦，故有俗语“索伦骑射甲天下”。清朝内外战争均有达斡尔将领参与。抗日战争时期，为东北地区抗日做出杰出贡献。达斡尔族能歌善舞的民族，民间音乐有山歌、对口唱和舞词等多种形式。"],
+                          [130.16588,46.723032,"赫哲族（人数较少）","赫哲族是中国东北地区一个历史悠久的少数民族，民族语言为赫哲语，属阿尔泰语系满-通古斯语族满语支（有观点认为应归入那乃次语支），无本民族的文字，使用西里尔字母来记录语言，通用汉语。主要分布于黑龙江、松花江、乌苏里江交汇构成的三江平原和完达山余脉。"],
+                          [126.652175,51.72916,"鄂伦春族（人数极少）","鄂伦春族是世居我国东北部地区的人口最少的民族之一，在长期的狩猎生产和社会实践中，鄂伦春人创造了丰富多彩的精神文化，如音乐、舞蹈、造型艺术等。鄂伦春族主要分布在内蒙古自治区呼伦贝尔盟鄂伦春自治旗、布特哈旗、莫力达瓦达斡尔族自治旗和黑龙江省大兴安岭地区。"],
+                          [124.887678,48.487604,"鄂温克族（人数较少）","鄂温克族是东北亚地区的一个民族，主要居住于中国内蒙古和黑龙江两省区，鄂温克人是从游牧发展到定居的，从事畜牧业生产方式的人群。他们的传统文化具有极大的丰富性，最为突出的是服饰文化知饮食文化。根据第六次全国人口普查，鄂温克族现有族人三万余人。"],
+                          [124.141788,39.868603,"锡伯族（人数较少）","锡伯族是我国少数民族中历史悠久的古老民族。今锡伯族多数居住在辽宁省和新疆。锡伯族至今保持着本民族的语言文字，兼用汉语、维吾尔语、哈萨克语。东北的锡伯族主要分布在辽宁省丹东市、铁岭市、锦州市等，其在语言、衣食、居住等方面习惯与汉族相差已经不大。"]];
+
+        var opts = {
+            width:250,
+            height:240,
+            title:"北方主要少数民族信息",
+            enableMessage:true  //允许窗口发送消息
+        };
+
+        var myIcon = new BMap.Icon("download/icon/雪山2.png",new BMap.Size(32,32));
+        var myIcon2 = new BMap.Icon("download/icon/鹿子.png",new BMap.Size(32,32));
+
+        for(var i = 0; i < data_info.length;i++){
+            var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]),{icon:myIcon});
+            var content = "<h5 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info[i][3] + "</p>";
+            map.addOverlay(marker);
+            addClickHandler(content,marker);
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        }
+        function addClickHandler(content,marker){
+            marker.addEventListener("click",function(e){
+                openInfo(content,e)
+            });
+        }
+        function openInfo(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+
+        for(var i = 0; i < data_info2.length;i++){
+            var marker2 = new BMap.Marker(new BMap.Point(data_info2[i][0],data_info2[i][1]),{icon:myIcon2});
+            var content2 = "<h5 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info2[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info2[i][3] + "</p>";
+            map.addOverlay(marker2);
+            addClickHandler(content2,marker2);
+            marker2.setAnimation(BMAP_ANIMATION_DROP);
+        }
+        function addClickHandler2(content,marker){
+            marker2.addEventListener("click",function(e){
+                openInfo2(content2,e)
+            });
+        }
+        function openInfo2(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content2,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+
+        //添加自定义覆盖物
+        /*function ComplexOverlay(point,text,mouseoverText){
+            this._point = point;
+            this._text = text;
+            this._overText = mouseoverText;
+        }
+        ComplexOverlay.prototype = new BMap.Overlay();
+        ComplexOverlay.prototype = function(map){
+            this._map = map;
+            var div = this._div = document.createElement("div");
+            div.style.position = "absolute";
+            div.style.backgroundColor = "black";
+            div.style.color = "white";
+            div.style.border = "1px solid transparent";
+            div.style.height = "18px";
+            div.style.padding = "2px";
+            div.style.lineHeight = "18px";
+            div.style.whiteSpace = "nowrap";
+            div.style.MozUserSelect = "none";
+            div.style.fontSize = "12px";
+            var span = this._span = document.createElement("span");
+            div.appendChild(span);
+            span.appendChild(document.createTextNode(this._text));
+            var that = this;
+            var arrow = this._arrow = document.createElement("div");
+            arrow.style.background = "url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
+            arrow.style.position = "absolute";
+            arrow.style.width = "11px";
+            arrow.style.height = "10px";
+            arrow.style.top = "22px";
+            arrow.style.left = "10px";
+            arrow.style.overflow = "hidden";
+            div.appendChild(arrow);
+
+            div.onmouseover = function(){
+                this.style.backgroundColor = "white";
+                this.style.borderColor = "#0000ff";
+                this.getElementsByTagName("span")[0].innerHTML = that._overText;
+                arrow.style.backgroundPosition = "0px -20px";
+            }
+
+            div.onmouseout = function(){
+                this.style.backgroundColor = "transparent";
+                this.style.borderColor = "transparent";
+                this.getElementsByTagName("span")[0].innerHTML = that._overText;
+                arrow.style.backgroundPosition = "0px 0px";
+            }
+
+            map.getPanes().labelPane.appendChild(div);
+            return div;
+        }
+        ComplexOverlay.prototype.draw = function(){
+            var map = this._map;
+            var pixel = map.pointToOverlayPixel(this._point);
+            this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+            this._div.style.top = pixel.y - 30 + "px";
+        }
+
+        var text_info = "满族、蒙古族",mouseoverText = text_info + " " ;
+        var text_point = [[128.80448,47.700829],[125.272199,43.840538],[126.449626,45.830056],
+                          [123.653237,42.05671]];
+        for(var i = 0;i < text_point.length;i++){
+            var myCompOverlay = new ComplexOverlay(new BMap.Point(text_point[i][0],text_point[i][1]),"满族、蒙古族",mouseoverText); 
+            map.addOverlay(myCompOverlay);
+        }*/
+
+    // 复杂的自定义覆盖物
+    function ComplexCustomOverlay(point, text, mouseoverText){
+      this._point = point;
+      this._text = text;
+      this._overText = mouseoverText;
+    }
+    ComplexCustomOverlay.prototype = new BMap.Overlay();
+    ComplexCustomOverlay.prototype.initialize = function(map){
+        this._map = map;
+        var div = this._div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+        //div.style.backgroundColor = "#87CEEB";
+        div.style.backgroundColor = "transparent";
+        div.style.border = "1px solid transparent";//#EE5D5B
+        div.style.color = "white";
+        div.style.height = "18px";
+        div.style.padding = "2px";
+        div.style.lineHeight = "18px";
+        div.style.whiteSpace = "nowrap";
+        div.style.MozUserSelect = "none";
+        div.style.fontSize = "12px";
+        var span = this._span = document.createElement("span");
+        div.appendChild(span);
+        span.appendChild(document.createTextNode(this._text));      
+        var that = this;
+
+        var arrow = this._arrow = document.createElement("div");
+        arrow.style.background = "url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
+        arrow.style.position = "absolute";
+        arrow.style.width = "11px";
+        arrow.style.height = "10px";
+        arrow.style.top = "22px";
+        arrow.style.left = "10px";
+        arrow.style.overflow = "hidden";
+        //arrow.style.backgroundColor = "transparent";
+        div.appendChild(arrow);
+     
+        div.onmouseover = function(){
+            this.style.backgroundColor = "transparent";
+            this.style.borderColor = "#B0C4DE";
+            this.getElementsByTagName("span")[0].innerHTML = that._overText;
+            arrow.style.backgroundPosition = "0px -20px";
+        }
+
+        div.onmouseout = function(){
+            this.style.backgroundColor = "transparent";
+            this.style.borderColor = "transparent";
+            this.getElementsByTagName("span")[0].innerHTML = that._text;
+            arrow.style.backgroundPosition = "0px 0px";
+        }
+
+        map.getPanes().labelPane.appendChild(div); 
+        return div;
+    }
+
+    ComplexCustomOverlay.prototype.draw = function(){
+        var map = this._map;
+        var pixel = map.pointToOverlayPixel(this._point);
+        this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+        this._div.style.top  = pixel.y - 30 + "px";
+    }
+
+    var txt = "该地主要分布少数民族：", mouseoverTxt = txt + "满族、蒙古族";
+    var text_point = [[128.80448,47.700829],[126.449626,45.830056],
+                      [117.98687,41.006073]];
+    for(var i = 0;i < text_point.length;i++){
+        var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(text_point[i][0],text_point[i][1]),"❄️❄️❄️",mouseoverTxt); 
+        map.addOverlay(myCompOverlay);
+    }
+
+    var txt2 = "该地主要分布少数民族：",mouseoverTxt2 = txt2 + "回族";
+    var text_point2 = [[117.140594,36.721948],[116.220729,37.517523],[113.387546,40.192724],[113.665336,34.750118]];
+    for(var i = 0;i < text_point2.length;i++){
+        var myCompOverlay2 = new ComplexCustomOverlay(new BMap.Point(text_point2[i][0],text_point2[i][1]),"❄️❄️❄️",mouseoverTxt2); 
+        //marker.setLabel(myCompOverlay2);
+        //map.addOverlay(marker);
+        map.addOverlay(myCompOverlay2);
+    }
+
+    /*var points = [{"lng":128.80448,"lat":47.700829,"count":30},
+    {"lng":125.272199,"lat":43.840538,"count":240},
+    {"lng":126.449626,"lat":45.830056,"count":120},
+    {"lng":123.653237,"lat":42.05671,"count":570},
+    {"lng":127.653237,"lat":40.05671,"count":100}
+    ];
+    heatmapOverlay = new BMapLib.HeatmapOverlay({"radius":20});
+	map.addOverlay(heatmapOverlay);
+	heatmapOverlay.setDataSet({data,max:100});
+    heatmapOverlay.show();
+	//是否显示热力图
+    function openHeatmap(){
+        heatmapOverlay.show();
+    }
+	function closeHeatmap(){
+        heatmapOverlay.hide();
+    }
+	//closeHeatmap();
+    function setGradient(){
+     	/*格式如下所示:
+		{
+	  		0:'rgb(102, 255, 0)',
+	 	 	.5:'rgb(255, 170, 0)',
+		  	1:'rgb(255, 0, 0)'
+		}*/
+     	/*var gradient = {};
+     	var colors = document.querySelectorAll("input[type='color']");
+     	colors = [].slice.call(colors,0);
+     	colors.forEach(function(ele){
+			gradient[ele.getAttribute("data-key")] = ele.value; 
+     	});
+        heatmapOverlay.setOptions({"gradient":gradient});
+    }*/
+
+    var data = [];
+    var randomCount = 30;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',
+                coordinates:[116.140594 + Math.random() * 2,36.721948 + Math.random() * 1]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 50;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',
+                coordinates:[128.80448 + Math.random() * 3,47.700829 + Math.random() * 1]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount =300;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',
+                coordinates:[125.603351 + Math.random() * 3,43.707223 + Math.random() * 3]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 150;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//123.616443,41.974391
+                coordinates:[122.616443 + Math.random() * 6,41.974391 + Math.random() * 2]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 20;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//128.510124,43.009166
+                coordinates:[128.510124 + Math.random() * 1,43.009166 + Math.random() * 1]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 50;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//123.726827,47.05098 齐齐哈尔
+                coordinates:[123.726827 + Math.random() * 1.5,47.05098 + Math.random() * 1.5]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    //122.95414,41.284223
+    var randomCount = 100;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//123.726827,47.05098
+                coordinates:[121.95414 + Math.random() * 6,41.284223 + Math.random() * 2]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 60;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//130.791389,46.214554 129.466783,44.555262
+                coordinates:[129.791389 + Math.random() * 1.5,46.214554 + Math.random() * 1.5]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 50;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//130.791389,46.214554 129.466783,44.555262 123.763621,42.05671
+                coordinates:[129.466783 + Math.random() * 2,43.555262 + Math.random() * 2]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 100;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//130.791389,46.214554 129.466783,44.555262 123.763621,42.05671
+                coordinates:[120.763621 + Math.random() * 2,40.05671 + Math.random() * 2]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 40;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//130.791389,46.214554 129.466783,44.555262 123.763621,42.05671
+                coordinates:[122.763621 + Math.random() * 1,41.05671 + Math.random() * 1]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 20;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//117.913281,40.838613
+                coordinates:[117.913281 + Math.random() * 1,40.838613 + Math.random() * 1]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 20;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//为113.277162,40.079756
+                coordinates:[113.277162 + Math.random() * 1,40.079756 + Math.random() * 1]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 40;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//116.220729,39.853253
+                coordinates:[116.220729 + Math.random() * 1,39.853253 + Math.random() * 1]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 50;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//113.534724,38.014103
+                coordinates:[113.534724 + Math.random() * 3,38.014103 + Math.random() * 3]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 40;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//大兴安岭 128.483855,49.567621 黑河市逊克县
+                coordinates:[125.483855 + Math.random() * 2.5,49.567621 + Math.random() * 3]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    //113.350751,36.958553回族分布散点
+    var randomCount = 100;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//106.985286,34.254563
+                coordinates:[106.985286 + Math.random() * 6,34.254563 + Math.random() * 3]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 100;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//114.712151,33.856417 113.665336,34.750118
+                coordinates:[114.712151 + Math.random() * 6,33.856417 + Math.random() * 3]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var randomCount = 30;
+        while(randomCount--){
+            data.push({
+            geometry: {
+                type: 'Point',//114.712151,33.856417 113.665336,34.750118
+                coordinates:[113.665336 + Math.random() * 2,34.750118 + Math.random() * 2]
+            },
+            count: 20 * Math.random(),
+        });
+    }
+
+    var dataSet = new mapv.DataSet(data);
+    var options = {
+        size: 13,
+        gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)"},
+        max: 100,
+        draw: 'heatmap'
+    }
+    var mapvLayer = new mapv.baiduMapLayer(map, dataSet, options);
+
+    </script>
+	
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+		.anchorBL{
+            display: none;
+        }
+
+		/* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:white;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			padding-left:5px;
+			padding-top:5px;
+			border-bottom:1px solid white;
+			background-color:	#B0C4DE;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color: white;
+			top:50px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+		.BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+		    
+		/* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(6){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+        .BMap_pop div:nth-child(8){
+            display: none;
+        }
+        
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+
+        @font-face { 
+            font-family: '新字体';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			right: 2%;
+			top: 20%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+        
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }  
+    </style>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<title>世界级非物质文化南方地区分布图</title>
+</head>
+<body>
+    <p class="myTitle">散落的明珠——世界级非物质文化南方地区分布图</p>
+	<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能	
+	map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(113.266255,23.133741), 6);  // 初始化地图,设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+	var data_info = [
+    [119.077731,25.44845,"福建莆田市","汉族","妈祖文化","妈祖是流传于中国沿海地区的民间信仰。莆田是妈祖文化的发祥地。妈祖，原名林默，于宋建隆元年(公元960年)农历三月二十三日诞生于福建莆田湄洲岛。林默幼年时就聪明颖悟，过目成诵，她洞晓天文气象，熟习水性，平素精研医理，教人防疫消灾，终生以行善济人为事。","img/妈祖.jpeg"],//莆田119.077731,25.44845
+					 [109.733755,19.180501,"海南省","汉族","妈祖文化","以中国东南沿海为中心的海神信仰，又称天妃、天后、天上圣母、娘妈等。妈祖信仰之所以能在海南发展，是因为海南四面环海的环境以及妈祖文化满足了政治需要。","img/妈祖.jpeg"],//"海南", g: "109.733755,19.180501
+					 [120.961454,23.80406,"台湾省","汉族","妈祖文化","据统计，台湾现有八百多座妈祖庙，皆拜莆田湄洲妈祖祖庙为祖庭。妈祖的信徒占总人口的四分之三，堪称妈祖信仰的极盛之地。从台湾妈祖庙宇的级别来看，无不属于“分灵”。一是从大陆捧持妈祖神符或香火到台湾奉祀，称为“分香”。","img/妈祖.jpeg"],//台湾", g: "120.961454,23.80406
+					 [98.574756,31.817015,"四川省及西藏自治区","藏族","格萨尔王传","《格萨尔王传》是藏族人民集体创作的一部伟大的英雄史诗，包含了藏民族文化的全部原始内核，具有很高的学术价值、美学价值和欣赏价值，是研究古代藏族社会的一部百科全书，被誉为“东方的荷马史诗”。","img/格萨尔王传.jpeg"],//四川甘孜德格县98.574756,31.81701
+                     [118.600362,24.901652,"福建省泉州市","汉族","南音（乐种）","南音是中国古老乐种，其唱法保留了唐以前传统古老的民族唱法，唱、奏者的二度创作极富随意性，是“人类口头及非物质遗产代表作”。","img/泉州南音.jpeg"],//泉州", g: "118.600362,24.901652
+					 [117.676205,24.517065,"福建省漳州市","汉族","南音（乐种）","泉州南音先也分布于福建省漳州市及厦门市,是现存历史最悠久的传统古乐。起源于唐，形成于宋，主要流行于闽南及台湾、南洋群岛华侨居住地区。","img/泉州南音.jpeg"],//漳州", g: "117.676205,24.517065
+                     [113.30765,23.120049,"广州省","汉族","粤剧","粤剧是糅合唱念做打、乐师配乐、戏台服饰、抽象形体的表演艺术。每一个行当都有各自独特的服饰打扮，又在伴奏乐器上大胆采用了一些西洋乐器，大大增强了烘托唱腔和戏剧动作的效果。","img/粤剧.jpeg"],//广州", g: "113.30765,23.120049
+					 [113.134026,23.035095,"广州省佛山市","汉族","粤剧","佛山是粤剧的发源地，粤剧最早的行会组织——琼花会馆就建在佛山。在佛山祖庙有华南最著名的古戏台——万福台，其建于清顺治十五年（1658年），是岭南地区规模最大、装饰最堂皇、保存最完好的古戏台。","img/粤剧2.jpg"],//佛山", g: "113.134026,23.035095
+                     [107.985353,26.583992,"贵州省黔东南苗族侗族自治州","侗族","侗族大歌","是流行于贵州省黔东南地区侗族的传统音乐，其结构严密而精美，歌词押韵，曲调优美，歌词多采用比兴手法，意蕴深刻。","img/侗族大歌.jpeg"],//"黔东南州", g: "107.985353,26.583992
+					 [109.129729,27.375722,"湖南省怀化市新晃侗族自治县","侗族","侗族大歌","侗族大歌,中国侗族民间多声部合唱音乐的总称,分布在贵州省、湖南省、广西省等侗族聚集地","img/侗族大歌.jpeg"],//湖南怀化新晃侗族自治县", g: "109.986959,27.557483
+					 [109.601321,25.786748,"广西省柳州三江侗族自治县","侗族","侗族大歌","《侗族大歌》，起源于春秋战国时期，至今已有2500多年的历史，是在中国侗族地区一种多声部、无指挥、无伴奏、自然合声的民间合唱形式。","img/侗族大歌2.jpg"],//广西柳州三江侗族自治县
+					];
+	var opts = {
+				width : 280,     // 信息窗口宽度
+				height: 290,     // 信息窗口高度
+                //title : '<h6>'+"世界级非物质文化遗产"+'</h6>', // 信息窗口标题
+                title:'<b>'+"世界级非物质文化遗产"+'</b>',
+				enableMessage:true//设置允许信息窗发送短息
+               };
+    
+    var myIcon = new BMap.Icon("img/icon8.png",new BMap.Size(32,32));
+
+	for(var i=0;i<data_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1],data_info[i][2],data_info[i][3],data_info[i][4],data_info[i][5],data_info[i][5]),{icon:myIcon});  // 创建标注
+		var content = "<h4 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info[i][2] + "</h4>"+ 
+        "<img style = 'float:right;margin:5px' id = 'imgDemo' title = '" + data_info[i][2] + "' src = '" + data_info[i][6] + "' width = '130' height = '120'/>" +
+        "<h6 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][3] +"</h6>" + 
+		"<h5 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][4] +"</h5>" +
+		"<p style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][5] +"</p>" +
+        "</div>";
+		map.addOverlay(marker);               // 将标注添加到地图中
+		addClickHandler(content,marker);
+        //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    }
+    
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+    }
+    
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+    }
+    
+	marker.addEventListener("click", function(){          
+	   this.openInfoWindow(infoWindow);
+	   //图片加载完毕重绘infowindow
+	   document.getElementById('imgDemo').onload = function (){
+		   infoWindow.redraw();   //防止在网速较慢，图片未加载时，生成的信息框高度比图片的总高度小，导致图片部分被隐藏
+	   }
+    });
+    
+</script>

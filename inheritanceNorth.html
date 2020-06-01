@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+		.anchorBL{
+            display: none;
+        }
+
+		/* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:white;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			padding-left:5px;
+			padding-top:5px;
+			border-bottom:1px solid white;
+			background-color:	#B0C4DE;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color: white;
+			top:50px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+		.BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+		    
+		/* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(6){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+        .BMap_pop div:nth-child(8){
+            display: none;
+        }
+        
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+
+        @font-face { 
+            font-family: '新字体';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			left: 15%;
+			top: 20%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+
+        .myTitle2{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			left: 10%;
+			top: 22%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+        
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }  
+    </style>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<title>世界级非物质文化北方地区分布图</title>
+</head>
+<body>
+    <p class="myTitle">散<br>落<br>的<br>明<br>珠<br></p>
+    <p class="myTitle2">世<br>界<br>级<br>非<br>物<br>质<br>文<br>化<br>北<br>方<br>地<br>区<br>分<br>布<br>图</p>
+	<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能	
+	map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(125.329456,43.821954), 6);  // 初始化地图,设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+	var data_info = [
+                     [123.85485,42.299757,"辽宁省铁岭市","朝鲜族","朝鲜族农乐舞","铁岭朝鲜族农乐舞源于祭祀性活动，在发展过程中逐渐演变成一种自娱性舞蹈，是一种融合音乐舞蹈、演唱为一体的综合性艺术表演形式。","img/朝鲜族农乐舞.jpeg"],//铁岭", g: "123.85485,42.299757
+                     [130.284735,46.81378,"黑龙江省佳木斯市","赫哲族","伊玛堪说唱艺术","伊玛堪是东北地区赫哲族的独特说唱艺术，表演形式为一个人说唱结合地进行徒口叙述，无乐器伴奏，采用叶韵和散文体的语言，这种独特的艺术形式传承了赫哲族语言、信仰、民俗和习惯。","img/赫哲族说唱.jpeg"],//"佳木斯", g: "130.284735,46.81378
+					];
+	var opts = {
+				width : 280,     // 信息窗口宽度
+				height: 290,     // 信息窗口高度
+                //title : '<h6>'+"世界级非物质文化遗产"+'</h6>', // 信息窗口标题
+                title:'<b>'+"世界级非物质文化遗产"+'</b>',
+				enableMessage:true//设置允许信息窗发送短息
+               };
+    
+    var myIcon = new BMap.Icon("img/icon8.png",new BMap.Size(32,32));
+
+	for(var i=0;i<data_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1],data_info[i][2],data_info[i][3],data_info[i][4],data_info[i][5],data_info[i][5]),{icon:myIcon});  // 创建标注
+		var content = "<h4 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info[i][2] + "</h4>"+ 
+        "<img style = 'float:right;margin:5px' id = 'imgDemo' title = '" + data_info[i][2] + "' src = '" + data_info[i][6] + "' width = '130' height = '120'/>" +
+        "<h6 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][3] +"</h6>" + 
+		"<h5 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][4] +"</h5>" +
+		"<p style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][5] +"</p>" +
+        "</div>";
+		map.addOverlay(marker);               // 将标注添加到地图中
+		addClickHandler(content,marker);
+        //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    }
+    
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+    }
+    
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+    }
+    
+	marker.addEventListener("click", function(){          
+	   this.openInfoWindow(infoWindow);
+	   //图片加载完毕重绘infowindow
+	   document.getElementById('imgDemo').onload = function (){
+		   infoWindow.redraw();   //防止在网速较慢，图片未加载时，生成的信息框高度比图片的总高度小，导致图片部分被隐藏
+	   }
+    });
+    
+</script>

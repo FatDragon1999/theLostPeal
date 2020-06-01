@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>青藏地区少数民族分布图</title>
+
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .anchorBL{
+            display: none;
+        }
+        
+        @font-face { 
+            font-family: '新字体';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			left: 35%;
+			top: 6%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:white;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			border-bottom:1px solid white;
+			background-color:	#B0C4DE;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color:transparent;
+			top:45px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+        .BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+
+        /* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+       
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+
+    </style>
+</head>
+<body>
+    <p class="myTitle">散落的明珠——青藏地区少数民族分布地图<br></p>
+    <div id="map"></div>
+    <canvas id="canvas"></canvas>
+
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=m5YH0l8iZEk3sNPWTCSyuC9uiuxmnxym"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+
+    <script type="text/javascript">
+        // 百度地图API功能
+        var map = new BMap.Map("map", {
+            enableMapClick: false
+        });    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(94.217562,33.871766), 6);  // 初始化地图,设置中心点坐标和地图级别
+        //map.enableScrollWheelZoom(false); // 开启鼠标滚轮缩放
+        madeBoundary();
+        map.setMapStyle({
+            style: 'midnight'
+        });
+
+        function madeBoundary(){
+            var datas = new Array("西藏自治区","青海省","甘孜藏族自治州","阿坝藏族羌族自治州","甘南藏族自治州");
+            var bdary = new BMap.Boundary();
+            for(var i = 0;i < datas.length;i++){
+                getBoundary(datas[i],bdary);
+            }
+        }
+
+        function getBoundary(data,bdary){
+            //data = data.split("-");
+            bdary.get(data,function(rs){
+                //map.clearOverlays();
+                var count = rs.boundaries.length;
+                if(count == 0){
+                    alert('未能获取当前输入行政区域');
+                    return;
+                }
+                var pointArray = [];
+                for(var i = 0;i < count;i++){
+                    var ply = new BMap.Polygon(rs.boundaries[i],{strokeWeight:1,strokeColor:"#DCDCDC",fillOpacity:0.5,fillColor:"#87CEEB"});
+                    map.addOverlay(ply);
+                    pointArray = pointArray.concat(ply.getPath());
+                }
+                //map.setViewport(pointArray);
+                //addlabel();
+            });
+        }
+
+        //var size = new BMap.Size(10, 20);   //控件位置
+        //map.addControl(new BMap.CityListControl({
+        //    anchor: BMAP_ANCHOR_TOP_LEFT,
+        //    offset: size,
+            // 切换城市之前事件
+            //onChangeBefore: function(){
+                //alert('即将切换到您选择的城市');
+            //},
+            // 切换城市之后事件
+            //onChangeAfter:function(){
+                //alert('已切换到您选择的城市');
+            //}
+        //}));
+
+
+        var data_info = [[91.16811,29.651452,"藏族","藏族是青藏高原的原住民。藏族普遍信仰藏传佛教，藏传佛教又又俗称喇嘛教。藏族人民创造了灿烂的民族文化，尤其在在文学、音乐、舞蹈、绘画、雕塑、建筑艺术等方面，留下了极为丰富的文化遗产。藏族雕刻技艺高超。此外藏戏独具特色，藏医药学也是人类重要遗产。"],
+                        [102.227967,31.907964,"羌族","羌族源于古羌，是中国西部的古老民族，被称为“云朵上的民族”。羌族除一部分邻近藏族地区的信仰藏传佛教外，其余普遍信仰原始宗教，即万物有灵、多神信仰和祖先崇拜。古羌对中国历史发展和中华民族的形成都有着广泛而深远的影响。其民族语言为羌语。"]];
+        var data_info2 = [[91.957999,27.998536,"门巴族（人数极少）","是中国具有悠久历史文化的民族之一，民族语言为门巴语，属汉藏语系藏缅语族藏语支，方言差别较大，无本民族文字，通用藏文。门巴族人民和藏族人民长期友好往来，互通婚姻，在政治、经济、文化、宗教信仰、生活习俗等方面都有十分密切的关系。"],];
+        var data_info3 = [[101.797249,36.529165,"回族","回族是中国人口较多的一个少数民族，全国的31个省、自治区、直辖市均有分布。伊斯兰教在回族的形成和发展中始终起着不可忽视的作用，在回族形成后，各地回族一直延续着这一信仰。回族保留了大量的阿拉伯语和波斯语的词汇。在日常语言表达上，城市回族通用汉语。"]];
+
+        var opts = {
+            width:250,
+            height:240,
+            title:"青藏地区主要少数民族信息",
+            enableMessage:true  //允许窗口发送消息
+        };
+
+
+        var myIcon = new BMap.Icon("download/icon/粮食5.png",new BMap.Size(32,32));
+        var myIcon2 = new BMap.Icon("download/icon/粮食4.png",new BMap.Size(32,32));
+        var myIcon3 = new BMap.Icon("download/icon/泰姬陵2.png",new BMap.Size(48,48));
+
+        for(var i = 0; i < data_info.length;i++){
+            var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]),{icon:myIcon});
+            var content = "<h5 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info[i][3] + "</p>";
+            map.addOverlay(marker);
+            addClickHandler(content,marker);
+            marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        }
+        function addClickHandler(content,marker){
+            marker.addEventListener("click",function(e){
+                openInfo(content,e)
+            });
+        }
+        function openInfo(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+
+        for(var i = 0; i < data_info2.length;i++){
+            var marker2 = new BMap.Marker(new BMap.Point(data_info2[i][0],data_info2[i][1]),{icon:myIcon2});
+            var content2 = "<h5 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info2[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info2[i][3] + "</p>";
+            map.addOverlay(marker2);
+            addClickHandler(content2,marker2);
+            marker2.setAnimation(BMAP_ANIMATION_DROP);
+        }
+        function addClickHandler2(content,marker){
+            marker2.addEventListener("click",function(e){
+                openInfo2(content2,e)
+            });
+        }
+        function openInfo2(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content2,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+
+        for(var i = 0; i < data_info3.length;i++){
+            var marker3 = new BMap.Marker(new BMap.Point(data_info3[i][0],data_info3[i][1]),{icon:myIcon3});
+            var content3 = "<h5 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info3[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info3[i][3] + "</p>";
+            map.addOverlay(marker3);
+            addClickHandler(content3,marker3);
+            //marker3.setAnimation(BMAP_ANIMATION_BOUNCE);
+        }
+        function addClickHandler3(content,marker){
+            marker.addEventListener("click",function(e){
+                openInfo(content3,e)
+            });
+        }
+        function openInfo3(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content3,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+
+        map.addEventListener("click",function(e){
+		    alert('您所点击处经纬度为' + e.point.lng + "," + e.point.lat);
+	    });
+
+        // 复杂的自定义覆盖物
+        function ComplexCustomOverlay(point, text, mouseoverText){
+          this._point = point;
+          this._text = text;
+          this._overText = mouseoverText;
+        }
+        ComplexCustomOverlay.prototype = new BMap.Overlay();
+        ComplexCustomOverlay.prototype.initialize = function(map){
+            this._map = map;
+            var div = this._div = document.createElement("div");
+            div.style.position = "absolute";
+            div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+            //div.style.backgroundColor = "#87CEEB";
+            div.style.backgroundColor = "transparent";
+            div.style.border = "1px solid transparent";//#EE5D5B
+            div.style.color = "white";
+            div.style.height = "18px";
+            div.style.padding = "2px";
+            div.style.lineHeight = "18px";
+            div.style.whiteSpace = "nowrap";
+            div.style.MozUserSelect = "none";
+            div.style.fontSize = "12px";
+            var span = this._span = document.createElement("span");
+            div.appendChild(span);
+            span.appendChild(document.createTextNode(this._text));      
+            var that = this;
+
+            var arrow = this._arrow = document.createElement("div");
+            arrow.style.background = "url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
+            arrow.style.position = "absolute";
+            arrow.style.width = "11px";
+            arrow.style.height = "10px";
+            arrow.style.top = "22px";
+            arrow.style.left = "10px";
+            arrow.style.overflow = "hidden";
+            //arrow.style.backgroundColor = "transparent";
+            div.appendChild(arrow);
+     
+            div.onmouseover = function(){
+                this.style.backgroundColor = "transparent";
+                this.style.borderColor = "#B0C4DE";
+                this.getElementsByTagName("span")[0].innerHTML = that._overText;
+                arrow.style.backgroundPosition = "0px -20px";
+            }
+
+            div.onmouseout = function(){
+                this.style.backgroundColor = "transparent";
+                this.style.borderColor = "transparent";
+                this.getElementsByTagName("span")[0].innerHTML = that._text;
+                arrow.style.backgroundPosition = "0px 0px";
+            }
+
+            map.getPanes().labelPane.appendChild(div); 
+            return div;
+        }
+
+        ComplexCustomOverlay.prototype.draw = function(){
+            var map = this._map;
+            var pixel = map.pointToOverlayPixel(this._point);
+            this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+            this._div.style.top  = pixel.y - 30 + "px";
+        }
+
+        var txt = "该地主要分布少数民族：", mouseoverTxt = txt + "藏族";
+        var text_point = [[99.847135,34.285113],[100.215081,37.6054],
+                        [97.013951,30.890464],[101.061356,30.061816]];
+        for(var i = 0;i < text_point.length;i++){
+            var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(text_point[i][0],text_point[i][1]),"🐑🐑🐑",mouseoverTxt); 
+            map.addOverlay(myCompOverlay);
+        }
+    
+
+        var data = [];
+
+        //91.162935,29.651954拉萨  97.142733,30.787274昌都 101.907633,30.205744甘孜 101.65007,36.707137西宁
+        var randomCount = 450;
+            while(randomCount--){
+                data.push({
+                geometry: {
+                    type: 'Point',
+                    coordinates:[80.162935 + Math.random() * 20,28.651954 + Math.random() * 3]
+                },
+                count: 20 * Math.random(),
+            });
+        }
+
+        var randomCount = 20;   //拉萨
+            while(randomCount--){
+                data.push({
+                geometry: {
+                    type: 'Point',
+                    coordinates:[91.162935 + Math.random() * 0.5,29.651954 + Math.random() * 0.5]
+                },
+                count: 20 * Math.random(),
+            });
+        }
+
+        var randomCount = 20;   //昌都
+            while(randomCount--){
+                data.push({
+                geometry: {
+                    type: 'Point',
+                    coordinates:[97.142733 + Math.random() * 0.5,30.787274 + Math.random() * 0.5]
+                },
+                count: 20 * Math.random(),
+            });
+        }
+
+        var randomCount = 220;
+            while(randomCount--){
+                data.push({
+                geometry: {
+                    type: 'Point',
+                    coordinates:[97.142733 + Math.random() * 8,30.787274 + Math.random() * 2]
+                },
+                count: 20 * Math.random(),
+            });
+        }
+
+        var randomCount = 30;
+            while(randomCount--){
+                data.push({
+                geometry: {
+                    type: 'Point',
+                    coordinates:[100.007633 + Math.random() * 1,29.205744 + Math.random() * 1]
+                },
+                count: 20 * Math.random(),
+            });
+        }
+
+        var randomCount = 100;
+            while(randomCount--){
+                data.push({
+                geometry: {
+                    type: 'Point',
+                    coordinates:[99.65007 + Math.random() * 2,33.707137 + Math.random() * 5]
+                },
+                count: 20 * Math.random(),
+            });
+        }
+
+        var dataSet = new mapv.DataSet(data);
+        var options = {
+            size: 13,
+            gradient: { 0.25: "rgb(0,0,255)", 0.55: "rgb(0,255,0)", 0.85: "yellow", 1.0: "rgb(255,0,0)"},
+            max: 100,
+            draw: 'heatmap'
+        }
+        var mapvLayer = new mapv.baiduMapLayer(map, dataSet, options);
+
+    </script>
+	
+</body>
+</html>

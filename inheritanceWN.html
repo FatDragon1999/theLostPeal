@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+		.anchorBL{
+            display: none;
+        }
+
+		/* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:white;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			padding-left:5px;
+			padding-top:5px;
+			border-bottom:1px solid white;
+			background-color:	#B0C4DE;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color: white;
+			top:50px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+		.BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+		    
+		/* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(6){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+        .BMap_pop div:nth-child(8){
+            display: none;
+        }
+        
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+
+        @font-face { 
+            font-family: '新字体';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			right: 10%;
+			top: 10%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+        
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }  
+    </style>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<title>世界级非物质文化西北地区分布图</title>
+</head>
+<body>
+    <p class="myTitle">散落的明珠——世界级非物质文化西北地区分布图</p>
+	<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能	
+	map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(100.838799,40.063034), 6);  // 初始化地图,设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+	var data_info = [
+                     [87.564988,43.84038,"新疆","维吾尔族","新疆维吾尔木卡姆艺术（歌舞乐曲大型综合艺术形式）","新疆维吾尔木卡姆艺术是一种集歌、舞、乐于一体的大型综合古典音乐艺术形式。其体裁多样，节奏错综复杂，曲调极为丰富，在艺术成就上是无与伦比的。","img/新疆维吾尔木卡姆艺术.jpeg"],
+					 [111.660351,40.828319,"内蒙古","内蒙古族","内蒙古长调民歌","蒙古族长调民歌是蒙古民族的历史、生产生活和精神性格的展示。其以短调民歌为基础，以长调民歌为创新，包含蒙古族狩猎、生活等内容。被誉为“草原音乐活化石”。","img/蒙古族长调.jpeg"],
+					 [104.626638,35.586056,"甘肃省定西市","汉、回、藏、东乡、保安、撒拉、土、裕固族","花儿（民歌）","花儿是一种民族歌调，因歌词中把女性比喻为花朵而得名。反映了生活、爱情、时政、劳动等内容。","img/花儿.png"], //定西市 "定西", g: "104.626638,35.586056
+                     [106.155481,37.321323,"宁夏回族自治区","汉、回族为主","花儿（民歌）","音乐形象绚丽多彩，文学内容也十分丰富。一般是以比、兴、赋的艺术手法即兴演出。","img/花儿.png"],//宁夏
+					 [76.137564,39.750346,"新疆克孜勒苏柯尔克孜自治州","克孜勒族","柯尔克孜族 《玛纳斯》史诗","描写了英雄玛纳斯及其七代子孙前仆后继、率领柯尔克孜人民与外来侵略者和各种邪恶势力进行斗争的事迹。体现了柯尔克孜人顽强不屈的民族性格和团结一致、奋发进取的民族精神。","img/玛纳斯.jpeg"], //克孜勒苏州", g: "76.137564,39.750346
+                     [106.155481,37.321323,"宁夏回族自治区","汉、回族为主","花儿（民歌）","音乐形象绚丽多彩，文学内容也十分丰富。一般是以比、兴、赋的艺术手法即兴演出。","img/花儿.png"],//宁夏
+					 [76.137564,39.750346,"新疆克孜勒苏柯尔克孜自治州","克孜勒族","柯尔克孜族 《玛纳斯》史诗","描写了英雄玛纳斯及其七代子孙前仆后继、率领柯尔克孜人民与外来侵略者和各种邪恶势力进行斗争的事迹。体现了柯尔克孜人顽强不屈的民族性格和团结一致、奋发进取的民族精神。","img/玛纳斯.jpeg"], //克孜勒苏州", g: "76.137564,39.750346
+                     [85.614899,42.127001,"新疆维吾尔自治区","维吾尔族","麦西热普（维吾尔族艺术）","维吾尔族的一种包含了舞蹈等各种表现形式的传统表演艺术场合。它融合了歌唱、舞蹈和娱乐","img/麦西热普.jpeg"], //"新疆", g: "85.614899,42.127001
+					];
+	var opts = {
+				width : 280,     // 信息窗口宽度
+				height: 290,     // 信息窗口高度
+                //title : '<h6>'+"世界级非物质文化遗产"+'</h6>', // 信息窗口标题
+                title:'<b>'+"世界级非物质文化遗产"+'</b>',
+				enableMessage:true//设置允许信息窗发送短息
+               };
+    
+    var myIcon = new BMap.Icon("img/icon8.png",new BMap.Size(32,32));
+
+	for(var i=0;i<data_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1],data_info[i][2],data_info[i][3],data_info[i][4],data_info[i][5],data_info[i][5]),{icon:myIcon});  // 创建标注
+		var content = "<h4 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info[i][2] + "</h4>"+ 
+        "<img style = 'float:right;margin:5px' id = 'imgDemo' title = '" + data_info[i][2] + "' src = '" + data_info[i][6] + "' width = '130' height = '120'/>" +
+        "<h6 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][3] +"</h6>" + 
+		"<h5 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][4] +"</h5>" +
+		"<p style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][5] +"</p>" +
+        "</div>";
+		map.addOverlay(marker);               // 将标注添加到地图中
+		addClickHandler(content,marker);
+        //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    }
+    
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+    }
+    
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+    }
+    
+	marker.addEventListener("click", function(){          
+	   this.openInfoWindow(infoWindow);
+	   //图片加载完毕重绘infowindow
+	   document.getElementById('imgDemo').onload = function (){
+		   infoWindow.redraw();   //防止在网速较慢，图片未加载时，生成的信息框高度比图片的总高度小，导致图片部分被隐藏
+	   }
+    });
+    
+</script>

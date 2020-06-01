@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+		.anchorBL{
+            display: none;
+        }
+
+		/* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:white;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			padding-left:5px;
+			padding-top:5px;
+			border-bottom:1px solid white;
+			background-color:	#B0C4DE;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color: white;
+			top:50px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+		.BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+		    
+		/* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(6){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+        .BMap_pop div:nth-child(8){
+            display: none;
+        }
+        
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+
+        @font-face { 
+            font-family: '新字体';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '新字体';
+			font-size: 25px;
+			position: absolute;
+			right: 30%;
+			bottom: 10%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+        
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }  
+    </style>
+	<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<title>世界级非物质文化青藏地区分布图</title>
+</head>
+<body>
+    <p class="myTitle">散落的明珠——世界级非物质文化青藏地区分布图</p>
+	<div id="allmap"></div>
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能	
+	map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point(97.177334,31.148662), 6);  // 初始化地图,设置中心点坐标和地图级别
+    map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+	var data_info = [
+					 [101.767921,36.640739,"青海省西宁市","汉、回、藏、土族","花儿（民歌）","花儿音乐高亢、悠长、爽朗，民族风格和地方特色鲜明。以汉语演唱，民族风格和地方特色鲜明","img/花儿.png"],//青海，西宁
+					 [102.0076,35.522852,"青海省黄南州同仁县","藏族","热贡艺术（唐卡、壁画）","热贡艺术主要指唐卡、壁画、堆绣、雕塑等绘画造型艺术。其以藏传佛教中的佛本生故事，藏族历史人物和神话、传说、史诗等为主要内容，也包括世俗化的内容。","img/热贡艺术.jpg"],//黄南州", g: "102.0076,35.522852
+					 [89.137982,31.367315,"西藏自治区","藏族","藏戏","也分布于青海省。藏戏是起源于8世纪藏族的宗教艺术。17世纪时，从寺院宗教仪式中分离出来，逐渐形成以唱为主，唱、诵、舞、表、白和技等基本程式相结合的生活化的表演。","img/藏戏.jpg"],//藏戏 西藏", g: "89.137982,31.367315
+					 [102.228565,31.905763,"四川省阿坝藏族羌族自治州","羌族","羌族年","羌年为羌族传统节日。又称小年，每年农历十月一日举行。这天，男女老少都要饮一点雄黄酒，并擦一点在耳边和鼻边内，撒一点在门前和窗前，以防蚊蝇虫蛇及秽气进入，保佑家人无恙。","img/羌族新年.jpeg"],//阿坝州", g: "102.228565,31.905763
+					 [91.111891,29.662557,"西藏自治区","藏族","藏医药浴","藏医药浴是藏族人民以土、水、火、风、空“五源”生命观和隆、赤巴、培根“三因”健康观及疾病观为指导，通过沐浴天然温泉或药物煮熬的水汁或蒸汽，调节身心平衡。","img/藏医药浴.jpeg"],
+					 [98.574756,31.817015,"四川省及西藏自治区","藏族","格萨尔王传","《格萨尔王传》是藏族人民集体创作的一部伟大的英雄史诗，包含了藏民族文化的全部原始内核，具有很高的学术价值、美学价值和欣赏价值，是研究古代藏族社会的一部百科全书，被誉为“东方的荷马史诗”。","img/格萨尔王传.jpeg"],//四川甘孜德格县98.574756,31.81701
+					];
+	var opts = {
+				width : 280,     // 信息窗口宽度
+				height: 290,     // 信息窗口高度
+                //title : '<h6>'+"世界级非物质文化遗产"+'</h6>', // 信息窗口标题
+                title:'<b>'+"世界级非物质文化遗产"+'</b>',
+				enableMessage:true//设置允许信息窗发送短息
+               };
+    
+    var myIcon = new BMap.Icon("img/icon8.png",new BMap.Size(32,32));
+
+	for(var i=0;i<data_info.length;i++){
+		var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1],data_info[i][2],data_info[i][3],data_info[i][4],data_info[i][5],data_info[i][5]),{icon:myIcon});  // 创建标注
+		var content = "<h4 style = 'margin:0 0 5px;padding:0.2em 0'>"+ data_info[i][2] + "</h4>"+ 
+        "<img style = 'float:right;margin:5px' id = 'imgDemo' title = '" + data_info[i][2] + "' src = '" + data_info[i][6] + "' width = '130' height = '120'/>" +
+        "<h6 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][3] +"</h6>" + 
+		"<h5 style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][4] +"</h5>" +
+		"<p style = 'margin:0;line-height:1.5;font-size:13px;text-indent:2em'>"+ data_info[i][5] +"</p>" +
+        "</div>";
+		map.addOverlay(marker);               // 将标注添加到地图中
+		addClickHandler(content,marker);
+        //marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    }
+    
+	function addClickHandler(content,marker){
+		marker.addEventListener("click",function(e){
+			openInfo(content,e)}
+		);
+    }
+    
+	function openInfo(content,e){
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts);  // 创建信息窗口对象 
+		map.openInfoWindow(infoWindow,point); //开启信息窗口
+    }
+    
+	marker.addEventListener("click", function(){          
+	   this.openInfoWindow(infoWindow);
+	   //图片加载完毕重绘infowindow
+	   document.getElementById('imgDemo').onload = function (){
+		   infoWindow.redraw();   //防止在网速较慢，图片未加载时，生成的信息框高度比图片的总高度小，导致图片部分被隐藏
+	   }
+    });
+    
+</script>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="uft-8" />
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+
+			.anchorBL{
+            	display: none;
+        	}
+
+			.wrap {
+				width: 100%;
+				height: 100%;
+				/*和list容器保持一致*/
+				position: relative;
+			}
+
+			.list {
+				width: 100%;
+				height: 100%;
+				list-style-type: none;
+				position: relative;
+				/*将图片叠在一起*/
+				padding: 0%;
+			}
+
+			.item {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				color: white;
+				font-size: 50px;
+				opacity: 0;
+				transition: all.8s;
+			}
+
+			.item:nth-child(1) {
+				background-color: black;
+			}
+
+			.item:nth-child(2) {
+				background-color: white;
+			}
+
+			.item:nth-child(3) {
+				background-color: pink;
+			}
+
+			.btn {
+				width: 50px;
+				height: 70px;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				/*将按钮放在中间，同时可能容器较多，要去掉padding*/
+				z-index: 100;
+				/*显示层数优先级*/
+			}
+
+			#goPre {
+				left: 5px;
+				background-color: transparent;
+				border: transparent;
+				color: white;
+				font-size: 60px;
+				outline: none;	/*去除点击后的边框*/
+				/*将箭头放在左端*/
+			}
+			#goPre:hover{
+				color: #B0C4DE;
+				font-size: 80px;
+			}
+
+			#goNext {
+				right: 5px;
+				background-color: transparent;
+				border: transparent;
+				color: white;
+				font-size: 60px;
+				outline: none;	/*去除点击后的边框*/
+				/*将箭头放在左端*/
+			}
+			#goNext:hover{
+				color: #B0C4DE;
+				font-size: 80px;
+			}
+
+			.item.active {
+				opacity: 1;
+				z-index: 10;
+				/*谁用了谁就是在最上面的那一层*/
+			}
+
+			.pointList {
+				padding-left: 0%;
+				list-style: none;
+				position: absolute;
+				/*看得见的位置*/
+				right: 20px;
+				bottom: 20px;
+				z-index: 500;
+			}
+
+			.point {
+				height: 5px;
+				width: 3px;
+				background-color: transparent;
+				border-radius: 100%;
+				/*变成圆*/
+				float: left;
+				/*进行漂浮*/
+				margin-right: 10px;
+				border-style: solid;
+				border-style: 2px;
+				border-color: rgb(255, 255, 255, 0.8);
+
+				cursor: pointer;
+			}
+
+			.point.active {
+				background-color: rgb(255, 255, 255, 0.5);
+			}
+
+			iframe {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<ul class="list">
+				<li class = "item active"><iframe src="baidu-map-point-heatmap.html"></iframe></li>
+                <li class = "item"><iframe src="test2.html"></iframe></li>
+                <li class = "item"><iframe src="testRealLine.html"></iframe></li>
+			</ul>
+			<ul class="pointList">
+				<li class="point active" data-index='0'></li>
+				<li class="point" data-index='1'></li>
+				<li class="point" data-index='2'></li>
+			</ul>
+			<button type="button" class="btn" id="goPre"><</button> 
+			<button type="button" class="btn" id="goNext">></button>
+		</div>
+		<script type="text/javascript">
+			document.getElementsByTagName("title")[0].innerText = '少数民族分布热力图';
+			var items = document.getElementsByClassName('item');
+			var points = document.getElementsByClassName('point');
+			var goPreBtn = document.getElementById('goPre');
+			var goNextBtn = document.getElementById('goNext');
+
+			var index = 0; //index表示第几张图片在展示，第index张图片有active类名
+			
+			
+			var clearActive = function() {
+				for (var i = 0; i < items.length; i++) {
+					items[i].className = 'item';
+				}
+				for (var i = 0; i < points.length; i++) {
+					points[i].className = 'point';
+				}
+				for(var i = 0;i <items.length;i++){
+					document.getElementsByTagName("title")[0].innerText = ' ';
+				}
+			}
+
+			var goIndex = function() {
+				clearActive();
+				points[index].className = 'point active';
+				items[index].className = 'item active';
+			}
+
+			var goNext = function() {
+				if (index < 2 ) {
+					index++;
+				} else {
+					index = 0;
+				}
+				goIndex();
+				if(index == 2){
+					document.getElementsByTagName("title")[0].innerText = '世界非物质文化遗产';
+				}
+				else if(index == 1){
+					document.getElementsByTagName("title")[0].innerText = '少数民族语言分布情况';
+				}
+				else if(index == 0){
+					document.getElementsByTagName("title")[0].innerText = '少数民族分布热力图';
+				}
+			}
+
+			var goPre = function() {
+				if (index == 0) {
+					index = 2;
+				} else {
+					index--;
+				}
+				goIndex();
+				if(index == 2){
+					document.getElementsByTagName("title")[0].innerText = '世界非物质文化遗产';
+				}
+				else if(index == 1){
+					document.getElementsByTagName("title")[0].innerText = '少数民族语言分布情况';
+				}
+			}
+
+			goNextBtn.addEventListener('click', function() {
+				goNext();
+			})
+
+			goPreBtn.addEventListener('click', function() {
+				goPre();
+			})
+
+			for (var i = 0; i < points.length; i++) {
+				points[i].addEventListener('click', function() {
+					var pointindex = this.getAttribute('data-index');
+					index = pointindex;
+					goIndex();
+				});
+			}
+		</script>
+	</body>
+</html>
