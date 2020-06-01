@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="star" unicode="&#58920;" d="M512 687.36l88.32-178.56 14.72-32 32-4.8 197.12-28.48-140.16-137.6-24-23.36 5.76-32 33.6-196.16-176.32 92.48L512 160l-29.76-15.68-176.32-91.2 32 196.16 5.76 32-23.68 24.64-141.44 139.2 197.12 28.48 32 4.8 14.72 32L512 687.36M512 832l-145.6-295.04-325.44-47.04 235.52-229.76L220.8-64l291.2 152.96L803.2-64l-55.68 324.16 235.52 229.44-325.44 47.36z"  horiz-adv-x="1024" />
+
+    
+    <glyph glyph-name="star--filled" unicode="&#58921;" d="M512 832l-145.6-295.04-325.44-47.04 235.52-229.76L220.8-64l291.2 152.96L803.2-64l-55.68 324.16 235.52 229.44-325.44 47.36z"  horiz-adv-x="1024" />
+
+    
+    <glyph glyph-name="star--half" unicode="&#58922;" d="M366.4 536.96L40.96 489.6l235.52-229.44L220.8-64l291.2 152.96V832l-145.6-295.04z"  horiz-adv-x="1024" />
+
+    
+    <glyph glyph-name="favorite--filled" unicode="&#58919;" d="M720 768c-64 0-124.8-25.6-169.6-70.4L512 659.2l-35.2 35.2c-92.8 96-246.4 96-339.2 3.2l-3.2-3.2c-96-96-96-249.6 0-345.6L512-32l377.6 380.8c96 96 96 249.6 0 345.6C844.8 742.4 784 768 720 768z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

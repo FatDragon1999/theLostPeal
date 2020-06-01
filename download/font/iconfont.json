@@ -1,0 +1,37 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "14473127",
+      "name": "star",
+      "font_class": "star",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "14473128",
+      "name": "star--filled",
+      "font_class": "star--filled",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "14473130",
+      "name": "star--half",
+      "font_class": "star--half",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "14473134",
+      "name": "favorite--filled",
+      "font_class": "favorite--filled",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    }
+  ]
+}
