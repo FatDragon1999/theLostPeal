@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>接近濒危语言分布图</title>
+    <script src="download/font/iconfont.js"></script>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .anchorBL{
+            display: none;
+        }
+
+        @font-face { 
+            font-family: 'myFont2';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: 'myFont2';
+			font-size: 25px;
+			position: absolute;
+			right:3%;
+			top: 80%;
+            text-shadow: 3px 3px 3px #E6E6FA;
+		}
+
+         /* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:#4F4F4F;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			border-bottom:1px solid white;
+			background-color:#FFEFDB;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color:transparent;
+			top:45px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+        .BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+
+        /* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+       
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <p class="myTitle">&nbsp>&nbsp>&nbsp>&nbsp>&nbsp>&nbsp>&nbsp>&nbsp>&nbsp散落的明珠——<br><br>接近濒危的少数民族语言分布地图</p>
+    <div id="map"></div>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript">
+
+        // 百度地图API功能
+        var map = new BMap.Map("map", {
+            enableMapClick: false
+        });    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(105.403119, 38.028658), 5);  // 初始化地图,设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+
+        map.setMapStyle({
+        styleJson: [
+              {
+                   "featureType": "water",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#044161"
+                   }
+              },
+              {
+                   "featureType": "land",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#064f85"
+                   }
+              },
+              {
+                   "featureType": "railway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#005b96",
+                        "lightness": 1
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#00508b"
+                   }
+              },
+              {
+                   "featureType": "poi",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "green",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#056197",
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "subway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "manmade",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "local",
+                   "elementType": "all",
+                   "stylers": {
+                       "color": "#115d97",
+                       "visibility": "on"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#029fd4"
+                   }
+              },
+              {
+                   "featureType": "building",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#1a5787"
+                   }
+              },
+              {
+                   "featureType": "label",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                    "featureType": "local",
+                    "elementType": "labels",
+                    "stylers": {
+                        "visibility": "off"
+                    }
+              }
+        ]
+    });
+
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+
+        var randomCount = 1000;
+
+        var data2 = [];
+
+        //var citys = ["南宁","北京","天津","上海","重庆","石家庄","太原","呼和浩特","哈尔滨","长春","沈阳","济南","南京","合肥","杭州","南昌","福州","郑州","武汉","长沙","广州","南宁","西安","银川","兰州","西宁","乌鲁木齐","成都","贵阳","昆明","拉萨","海口","阿克苏地区"];
+
+        //*******濒危边缘**********//
+        // 羌语 阿坝州", g: "102.228565,31.905763
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [102.228565,31.905763]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        
+        // 达斡尔语 呼伦贝尔", g: "119.760822,49.201636
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [119.760822,49.201636]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+
+        // 达斡尔语 齐齐哈尔", g: "123.987289,47.3477
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [123.987289,47.3477]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+
+
+        // 纳西语 "丽江", g: "100.229628,26.875351
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [100.229628,26.875351]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        
+        // 土家族 重庆", g: "108.761935,28.850582
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [108.761935 + Math.random() * 0.01,28.850582 + Math.random() * 0.01]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        
+        // 铜仁地区", g: "109.196161,27.726271
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [109.196161,27.726271]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        // 恩施", g: "109.517433,30.308978
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [109.517433,30.308978]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+
+        // 宜昌", g: "111.310981,30.732758
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [111.310981,30.732758]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+
+        // 湘西州", g: "109.745746,28.317951
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [109.745746,28.317951]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+
+        //海东地区", g: "102.085207,36.51761
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [102.085207,36.51761]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        
+        //乌鲁木齐
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [87.564988,43.84038]
+            },
+            count: 80 * Math.random(), //濒危语言+活力语言
+            time: 80 * Math.random()
+        });
+        
+        //海南
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [109.733755,19.180501]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        
+        //"广东", g: "113.394818,23.408004
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [113.394818,23.408004]
+            },
+            count: 50 * Math.random(), //濒危+活力
+            time: 60 * Math.random()
+        });
+
+        var dataSet = new mapv.DataSet(data2);
+
+        var options2 = {
+            fillStyle: 'rgba(178,34,34,0.9)', //中心圆的颜色
+            maxSize: 10,
+          max: 30,
+          shadowBlur: 30,
+          shadowColor: 'rgba(165,42,42, 1)',
+            animation: {
+                type: 'time',
+                stepsRange: {
+                    start: 0,
+                    end: 100
+                },
+                trails: 10,
+                duration: 5,
+            },
+            draw: 'bubble'
+        }
+
+        var mapvLayer = new mapv.baiduMapLayer(map, dataSet, options2);
+
+        var data_info = [[119.760822,49.201636,"达斡尔语","达斡尔语（Daur language，Daghur husgh）属阿尔泰语系。主要分布在中国内蒙古自治区的呼伦贝尔市和黑龙江省的齐齐哈尔附近沿嫩江及其支流一带地方。"],
+                         [123.987289,47.3477,"达斡尔语","新疆塔城里一些达斡尔族说的语言和莫力达瓦达斡尔族自治旗语言接近。该语言使用人口约14万。有着丰富的反映渔业、狩猎、畜牧和农业等各种生产方式的词语。"],
+                         [102.228565,31.905763,"羌语","羌语支语言是我国汉藏语系藏缅语族内的一群语言。羌语支语言全部分布在我国境内，包括12种现行语言和一种文献语言。羌语支语言有明显的共同特点，借词较多。"],
+                         [100.229628,26.875351,"纳西语","纳西语，纳西族自己本民族的语言，其语系属汉藏语系藏缅语族彝语支中一种独立的分支语言，同彝语、哈尼语以及拉祜语等有着非常密切的亲缘关系，有自己的发音特点。"],
+                         [108.761935,28.850582,"土家语","毕基语（北部土家语）和孟兹语（南部土家语）是土家族特有的民族语言，属汉藏语系藏缅语族土家语支。文字资料很少。有不同的语支，其中胡玛语系保存较为良好。"],
+                         [109.517433,30.308978,"土家语","与汉族杂居后，汉族语言逐渐成为大部分土家族人的第一语言。现在土家族语言已经在绝大部分土家族地区消失，只剩下武陵山区、酉水流域还有残存的土家语分支语言。"],
+                         [109.196161,27.726271,"土家语","在历史上，毕基语曾是传统上土家族地区的通用语言和官方语言，因历史问题一度衰退，如今是极度濒危语言，只在酉水流域还有少许人会毕基语，相应区域正在努力挽救。"],
+                         [113.394818,23.408004,"勉语","勉语（Mian language）中国自称“勉”的瑶族使用的语言。属汉藏语系苗瑶语族瑶语支。主要分布在中国广西、湖南、云南、广东、贵州、江西等省的90多个县的部分山区。"],
+                         [109.733755,19.180501,"勉语","大致可分为3个方言。其中勉-金方言，又可分为优勉、标曼和金门3个土语，是人口较多、分布最广的一个方言，有瑶族居住，则有人说。海南岛的苗族语言属这个方言的金门土语。"],
+                         [102.085207,36.51761,"撒拉语","撒拉语，属于阿尔泰语系突厥语族乌古斯语支，是一种中国独有的突厥语族语言。使用撒拉语的主要是中国的撒拉族，他们主要居住在中国的青海省东部及甘肃省临夏等地。"],
+                         [87.564988,43.84038,"撒拉语","新疆维吾尔自治区的乌鲁木齐和伊宁也有少量撒拉人居住。撒拉族大约有9万人，其中约7万人使用撒拉语，其他多数人说汉语，根据居住环境不同有的人还兼通藏语或维吾尔语。"],
+                        ];
+
+        var opts = {
+            width:50,
+            height:200,
+            title:"接近濒危的少数民族语言",
+            enableMessage:true  //允许窗口发送消息
+        };
+
+        var myIcon = new BMap.Icon("download/icon/like.png",new BMap.Size(32,32));
+
+        for(var i = 0; i < data_info.length;i++){
+            var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]),{icon:myIcon});
+            var content = "<h5 style = 'margin:0 0 5px;padding:0.2em 0;text-align:center'>" + data_info[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info[i][3] + "</p>";
+            map.addOverlay(marker);
+            addClickHandler(content,marker);
+            //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        }
+        function addClickHandler(content,marker){
+            marker.addEventListener("click",function(e){
+                openInfo(content,e)
+            });
+        }
+        function openInfo(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+
+    </script>
+    
+</body>
+</html>

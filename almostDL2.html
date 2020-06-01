@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>濒危语言图</title>
+    <script src="download/font/iconfont.js"></script>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .anchorBL{
+            display: none;
+        }
+
+        @font-face { 
+            font-family: 'myFont2';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: 'myFont2';
+			font-size: 25px;
+			position: absolute;
+			left:15%;
+			top: 20%;
+            text-shadow: 3px 3px 3px #E6E6FA;
+		}
+
+        .myTitle2{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: 'myFont2';
+			font-size: 25px;
+			position: absolute;
+			left:10%;
+			top: 20%;
+            text-shadow: 3px 3px 3px #E6E6FA;
+		}
+
+         /* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:white;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			border-bottom:1px solid white;
+			background-color:#8B4726;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color:transparent;
+			top:45px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+        .BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+
+        /* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+       
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <p class="myTitle">散<br>落<br>的<br>明<br>珠</p>
+    <p class="myTitle2">濒<br>危<br>的<br>少<br>数<br>民<br>族<br>语<br>言<br>分<br>布<br>地<br>图</p>
+    <div id="map"></div>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript">
+
+        // 百度地图API功能
+        var map = new BMap.Map("map", {
+            enableMapClick: false
+        });    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(105.403119, 38.028658), 5);  // 初始化地图,设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+
+        map.setMapStyle({
+        styleJson: [
+              {
+                   "featureType": "water",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#044161"
+                   }
+              },
+              {
+                   "featureType": "land",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#064f85"
+                   }
+              },
+              {
+                   "featureType": "railway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#005b96",
+                        "lightness": 1
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#00508b"
+                   }
+              },
+              {
+                   "featureType": "poi",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "green",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#056197",
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "subway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "manmade",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "local",
+                   "elementType": "all",
+                   "stylers": {
+                       "color": "#115d97",
+                       "visibility": "on"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#029fd4"
+                   }
+              },
+              {
+                   "featureType": "building",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#1a5787"
+                   }
+              },
+              {
+                   "featureType": "label",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                    "featureType": "local",
+                    "elementType": "labels",
+                    "stylers": {
+                        "visibility": "off"
+                    }
+              }
+        ]
+    });
+
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+
+        var randomCount = 1000;
+
+        var data = [];
+
+        //var citys = ["南宁","北京","天津","上海","重庆","石家庄","太原","呼和浩特","哈尔滨","长春","沈阳","济南","南京","合肥","杭州","南昌","福州","郑州","武汉","长沙","广州","南宁","西安","银川","兰州","西宁","乌鲁木齐","成都","贵阳","昆明","拉萨","海口","阿克苏地区"];
+
+        //*************活力很差，濒危语言**************//
+        var data3 = [];
+        //阿侬语 怒江州", g: "98.875652,26.908054
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [98.875652,26.908054]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //赫哲语 双鸭山+佳木斯
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [131.171402,46.655102]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [130.284735,46.81378]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //普标语 文山", g: "104.089112,23.401781
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [104.089112,23.401781]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //柔若语 怒江州", g: "98.859932,25.860677
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [98.859932,25.860677]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //江西", g: "115.676082,27.757258 畲语
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [115.676082,27.757258]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //安徽", g: "117.216005,31.859252
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [117.216005,31.8592528]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        var point = new BMap.Point(117.216005,31.8592528);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(-0, -0)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("畲语 福建省内也有分布", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'25px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#FF6A6A",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+	    });
+        map.addOverlay(label);
+        //浙江", g: "119.957202,29.159494
+        var point = new BMap.Point(119.957202,29.159494);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(-0, -5)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("畲语", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'25px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#FF6A6A",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+	    });
+        map.addOverlay(label);
+        //福建", g: "117.984943,26.050118
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [117.984943,26.050118]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //仙岛语 "德宏州", g: "98.589434,24.44124
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [98.589434,24.44124]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //赛德克语 玛兰语  花莲县南投 121.627932,23.99307 120.705986,23.907847
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [121.627932,23.99307]
+            },
+            count: 20 * Math.random(),
+            time: 30 * Math.random()
+        });
+        // 噶玛兰语 台东 121.629082,23.994126
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [121.629082,23.994126]
+            },
+            count: 20 * Math.random(),
+            time: 30 * Math.random()
+        });
+        // 南投县 120.705986,23.907847
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [120.705986,23.907847]
+            },
+            count: 20 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //赛夏语 阿里山 120.80139,23.51965
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [120.80139,23.51965]
+            },
+            count: 20 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //克蔑语 西双版纳", g: "100.803038,22.009433
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [100.803038,22.009433]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //布兴语 勐腊县 101.565206,21.459899
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [101.565206,21.459899]
+            },
+            count: 30 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //西藏林芝市墨脱县达木珞巴族 95.266485,29.503598
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [95.266485,29.503598]
+            },
+            count: 50 * Math.random(),
+            time: 30 * Math.random()
+        });
+        //苏龙语 西藏山南错那县
+        data3.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [91.957999,27.993943]
+            },
+            count: 100 * Math.random(),
+            time: 50 * Math.random()
+        });
+        var dataSet = new mapv.DataSet(data3);
+
+        var options = {
+            fillStyle: 'rgba(139,58,58,0.9)', //中心圆的颜色
+            maxSize: 10,
+          max: 30,
+          shadowBlur: 30,
+          shadowColor: 'rgba(139,71,38,0.8)',
+            animation: {
+                type: 'time',
+                stepsRange: {
+                    start: 0,
+                    end: 100
+                },
+                trails: 10,
+                duration: 5,
+            },
+            draw: 'bubble'
+        }
+
+        var mapvLayer = new mapv.baiduMapLayer(map, dataSet, options);
+
+        var data_info = [[98.875652,26.908054,"阿侬语","阿侬语是自称阿侬支系的怒族使用的语言，主要分布在云南省怒江僳僳族自治州的福贡县，缅甸境内也有分布。中国境内的阿侬人有7000多，但能够使用母语的仅有400人左右，而且主要是老年人，是一个濒危语言。阿侬语属汉藏语系藏缅语族景颇语支，同语支中与独龙语最接近。无文字。"],
+                         [91.957999,27.993943,"苏龙语","苏龙语是中国珞巴族部落所使用的一种语言。“苏龙”是邻近部落崩尼人对该部落的称呼。该部落主要分布在中印边境传统习惯线以北的中国西藏珞隅地区，其中以错那县达旺以东地区最为集中，人口据初步推算大致有2000多人，方言差异比较大。该部落的绝大多数成员都是双语者或多语者。"],
+                         [95.266485,29.503598,"珞巴语","珞巴语属汉藏语系藏缅语族，语支尚未明确归属。其由许多种方言组成，是珞巴族的语言。珞巴族处于中国实际控制区域的不足3000人，他们同藏族往来较多，语言上受到藏族的影响较强，吸收了不少藏语中的词汇，无自己的文字，通用藏文或者汉字。该民族部分人口也会普通话。"],
+                         [131.171402,46.655102,"赫哲语","赫哲语（Hezhen language）属阿尔泰语系-满-通古斯语族-满语支，是赫哲族语言，赫哲族越有1400余人，但是实际能讲赫哲语的为老年人，绝大部分人已经转为了汉语。现在留存的多为赫哲语单词和短语，语言极其濒危。无本民族文字，通用汉字。该语言分为两个方言——奇楞与赫真方言。"],
+                         [104.089112,23.401781,"普标语","是位于中国与越南边境的普标人所使用的语言，属壮侗语系仡央语群央标语支。使用者分布在中国云南省文山壮族苗族自治州麻栗坡县的几个村寨和越南与中国接壤的一些地区。据1984年的调查，在中国一侧的普标人均会讲汉语，且多数使用汉语，会说普标语的只有约50人，都是老年人。"],
+                         [98.859932,25.860677,"柔若语","柔若语是怒族中自称[zou zuo]的一个支系民族使用的语言，分布在云南省怒江傈僳族自治州的兰坪、泸水等县，属汉藏语系藏缅语族彝语支，无文字。使用人口2000多，分果力和江末两个土语，彼此可以通话，周围与白族和傈僳族杂居。语言受汉语、傈僳语和白语的一定影响，有一定比例的借词。"],
+                         [115.676082,27.757258,"畲语","是指畲族所使用的语言，是山客话。汉族人一般称之为“畲民语”或“畲客语”；在畲族内部则称之为“山哈话”，意为“山客话”。属汉藏语系、语族语支未定，分布在中国的福建、浙江、广东、江西、安徽等省的部分山区。是东家话。属汉藏语系，苗瑶语族，苗语支，川黔滇方言。"],
+                         [101.565206,21.459899,"布兴语","布兴语属于南亚语系孟高棉语族高棉语支。在中国跟克木语的关系较近。使用这种话的人在当地傣语中被称为“佧比人”，中国境内的这些人生活在云南省勐腊县的两个寨子，人口大约450人。目前较近一次对于该语言的研究书籍出版于2004年。语言保护情况同样十分濒危。克木语广泛用于中南半岛。"],
+                         [120.705986,23.907847,"赛德克语","赛德克语（Seediq）为台湾原住民赛德克族使用的一种南岛语，主要使用在宜兰花莲南投相接地区，一般学者将其归于泰雅语族（Atayalic)。赛德克语群包含德鲁固语(Truku;太鲁阁语)、都达语(Teuda)、与德克达雅语(Tkedaya)这三个语言，这些语言其文法彼此相近，各语言使用者甚至于可互相交谈。"],
+                         [121.629082,23.994126,"噶玛兰语","噶玛兰语是居住在台湾兰阳平原自称为噶玛兰(kavalan)人说的语言，是一种多音节的粘着性语言。但兰阳平原的噶玛兰人现已不会说噶玛兰语，而其中的一支南下迁移到东海岸花莲，台东沿海一带，至今仍能说噶玛兰语，分布在花莲县。在日常生活中使用噶玛兰语，对外使用阿眉斯语和汉语闽南话。"],
+                         [98.589434,24.44124,"仙岛语","仙岛语别称先岛语、先岛话等，是阿昌族的支系仙岛人使用的本民族语言.语言归属汉藏语系藏缅语族缅彝语群彝语支，原归为阿昌语的一个方言，1990年代独立出来，属于“中国新发现语言”的一种，也是中国境内极度濒危的一种语言。至2002年有16家户总共76人仍在使用仙岛语，余下多用汉、景颇、傣。"],
+
+                        ];
+
+        var opts = {
+            width:100,
+            height:280,
+            title:"已经濒危的少数民族语言",
+            enableMessage:true  //允许窗口发送消息
+        };
+
+        var myIcon = new BMap.Icon("download/icon/濒危2.png",new BMap.Size(32,32));
+
+        for(var i = 0; i < data_info.length;i++){
+            var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]),{icon:myIcon});
+            var content = "<h5 style = 'margin:0 0 5px;padding:0.2em 0;text-align:center'>" + data_info[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info[i][3] + "</p>";
+            map.addOverlay(marker);
+            addClickHandler(content,marker);
+            //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        }
+        function addClickHandler(content,marker){
+            marker.addEventListener("click",function(e){
+                openInfo(content,e)
+            });
+        }
+        function openInfo(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+    </script>
+    
+</body>
+</html>

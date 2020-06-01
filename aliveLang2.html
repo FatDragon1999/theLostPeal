@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>充满活力语言图</title>
+    <script src="download/font/iconfont.js"></script>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .anchorBL{
+            display: none;
+        }
+
+        @font-face { 
+            font-family: 'myFont2';  
+            src: url(download/font/myFont.TTF); 
+        } 
+        
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: 'myFont2';
+			font-size: 25px;
+			position: absolute;
+			left: 90%;
+			bottom: 12%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+
+        .myTitle2{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: 'myFont2';
+			font-size: 25px;
+			position: absolute;
+			left: 95%;
+			bottom: 12%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+
+         /* 消息内容 */
+		.BMap_bubble_content {
+			background-color:white;
+			padding-left:10px;
+			padding-right: 10px;
+			padding-top:5px;
+			padding-bottom:10px;
+		}
+
+        /*地图标题*/
+		.BMap_bubble_title {
+			color:#4F4F4F;
+			font-size:13px;
+			font-weight:bold;
+			text-align: center;
+			border-bottom:1px solid white;
+			background-color:#FFEFDB;
+			line-height:30px !important;
+		}
+
+		/* 左上角删除按键 */
+		.BMap_pop img {
+            color:transparent;
+			top:45px !important;
+			/*left:215px !important;*/
+			margin-left:-10px;
+		}
+
+        .BMap_top {
+			display:none;
+		}
+        .BMap_center{
+            display: none;
+        }
+        .BMap_bottom{
+            display: none;
+        }
+
+        /* 隐藏边角 */
+		.BMap_pop div:nth-child(1) div {
+			display:none;
+		}
+		.BMap_pop div:nth-child(3){
+            display: none;
+        }
+        .BMap_pop div:nth-child(5){
+            display: none;
+        }
+        .BMap_pop div:nth-child(7){
+            display: none;
+        }
+       
+        /* 内容 */
+		.BMap_pop div:nth-child(9) {
+			top:35px !important;
+			border-radius:7px;
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <p class="myTitle">散<br>落<br>的<br>明<br>珠<br></p>
+    <p class="myTitle2">充<br>满<br>活<br>力<br>的<br>少<br>数<br>民<br>族<br>语<br>言<br>分<br>布<br>地<br>图</p>
+    <div id="map"></div>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript">
+
+        // 百度地图API功能
+        var map = new BMap.Map("map", {
+            enableMapClick: false
+        });    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(105.403119, 38.028658), 5);  // 初始化地图,设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+
+        map.setMapStyle({
+        styleJson: [
+              {
+                   "featureType": "water",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#044161"
+                   }
+              },
+              {
+                   "featureType": "land",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#064f85"
+                   }
+              },
+              {
+                   "featureType": "railway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#005b96",
+                        "lightness": 1
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#00508b"
+                   }
+              },
+              {
+                   "featureType": "poi",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "green",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#056197",
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "subway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "manmade",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "local",
+                   "elementType": "all",
+                   "stylers": {
+                       "color": "#115d97",
+                       "visibility": "on"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#029fd4"
+                   }
+              },
+              {
+                   "featureType": "building",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#1a5787"
+                   }
+              },
+              {
+                   "featureType": "label",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                    "featureType": "local",
+                    "elementType": "labels",
+                    "stylers": {
+                        "visibility": "off"
+                    }
+              }
+        ]
+    });
+
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+
+        var randomCount = 1000;
+
+        var data = [];
+
+        //var citys = ["南宁","北京","天津","上海","重庆","石家庄","太原","呼和浩特","哈尔滨","长春","沈阳","济南","南京","合肥","杭州","南昌","福州","郑州","武汉","长沙","广州","南宁","西安","银川","兰州","西宁","乌鲁木齐","成都","贵阳","昆明","拉萨","海口","阿克苏地区"];
+
+        // 充满活力的语言 
+        // 维吾尔语 阿克苏地区 80.269846,41.171731
+        data.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [80.269846,41.171731]
+            },
+            count: 50 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 和田地区 79.930239,37.116774
+        data.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [79.930239,37.116774]
+            },
+            count: 50 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 日喀则地区 88.891486,29.269023
+        data.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [88.891486,29.269023]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        //  哈萨克语 阿勒泰地区, g: "88.137915,47.839744
+        data.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [88.137915,47.839744]
+            },
+            count: 80 * Math.random(), //濒危+活力
+            time: 80 * Math.random()
+        });
+        //  "塔城地区", g: "82.974881,46.758684
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [82.974881,46.758684]
+            },
+            count: 80 * Math.random(), //濒危语言+活力语言
+            time: 80 * Math.random()
+        });
+        // 乌鲁木齐", g: "87.564988,43.84038  //濒危
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [87.564988,43.84038]
+            },
+            count: 80 * Math.random(), //濒危语言+活力语言
+            time: 80 * Math.random()
+        });
+        // 昌吉州", g: "87.296038,44.007058
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [87.296038,44.007058]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 博尔塔拉州", g: "82.052436,44.913651
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [82.052436,44.913651]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 伊犁州", g: "81.297854,43.922248   //濒危+活力
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [81.297854,43.922248]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 藏语 西藏", g: "89.137982,31.367315
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [89.137982,31.367315]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 青海", g: "96.202544,35.499761
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [96.202544,35.499761]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 云南", g: "101.592952,24.864213
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [101.592952,24.864213]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 四川", g: "102.89916,30.367481 102.262004,27.882132
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [102.89916,30.367481]
+            },
+            count:80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 甘肃", g: "102.457625,38.103267
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [102.457625,38.103267]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 朝鲜语 黑龙江", g: "129.477982,42.921545
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [129.477982,42.921545]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 吉林", g: "126.262876,43.678846
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [126.262876,43.678846]
+            },
+            count: 50 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // "辽宁", g: "122.753592,41.6216
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [122.753592,41.6216]
+            },
+            count: 50 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 壮语 南宁", g: "108.297234,22.806493
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [108.297234,22.806493]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 百色", g: "106.631821,23.901512
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [106.631821,23.901512]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 文山", g: "104.089112,23.401781
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [104.089112,23.401781]
+            },
+            count: 80 * Math.random(), //濒危+活跃
+            time: 80 * Math.random()
+        });
+        // 曲靖", g: "103.782539,25.520758
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [103.782539,25.520758]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 清远", g: "113.040773,23.698469
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [113.040773,23.698469]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 肇庆", g: "112.479653,23.078663
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [112.479653,23.078663]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 彝语 贵州", g: "106.734996,26.902826 102.262004,27.882132
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [106.734996,26.902826]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        //彝语 凉山州 102.262004,27.882132
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [102.262004,27.882132]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 广西", g: "108.924274,23.552255
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [108.924274,23.552255]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        // 蒙语 内蒙古", g: "114.415868,43.468238
+        data.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [114.415868,43.468238]
+            },
+            count: 80 * Math.random(),
+            time: 80 * Math.random()
+        });
+        var dataSet = new mapv.DataSet(data);
+
+        var options = {
+            fillStyle: 'rgba(255, 192, 203, 0.9)', //中心圆的颜色
+            maxSize: 10,
+          max: 30,
+          shadowBlur: 30,
+          shadowColor: 'rgba(255, 192, 203, 1)',
+            animation: {
+                type: 'time',
+                stepsRange: {
+                    start: 0,
+                    end: 100
+                },
+                trails: 10,
+                duration: 5,
+            },
+            draw: 'bubble'
+        }
+
+        var mapvLayer = new mapv.baiduMapLayer(map, dataSet, options);
+
+
+        var data_info = [[80.269846,41.171731,"维吾尔语","维吾尔族的语言，简称维语(Uyghur)，属阿尔泰语系—突厥语族—葛逻禄语支。与乌兹别克语十分相似。其次与哈萨克语，柯尔克孜语，塔塔尔语，土耳其语等语言也有些相似。标准语以中心方言为基础，是典型的黏着语种，以伊犁，乌鲁木齐语音为标准音。"],
+                         [88.137915,47.839744,"哈萨克语","哈萨克语属阿尔泰语系突厥语族钦察语支,主要分布在哈萨克斯坦，其次分布在中国、乌兹别克斯坦、俄罗斯、土耳其等国。哈萨克族原来使用以古代突厥字母为基础的文字，后来改为应用阿拉伯字母。中国曾创造了新的哈萨克文，但普及较差，现在基本上又恢复至使用阿拉伯字母。"],
+                         [89.137982,31.367315,"藏语","属汉藏语系藏缅语族藏语支。分布在中国西藏、青海、四川甘孜、阿坝、甘肃与云南迪庆5个地区。藏语分成三大方言：卫藏方言（即拉萨话）、康巴方言（德格话、昌多话）、安多方言。只有安多方言没有区别意义的声调。不丹、印度、尼泊尔、巴基斯坦也有部分地区说藏语。"],
+                         [129.477982,42.921545,"朝鲜语","朝鲜语（Korean language），和济州语一并属于朝鲜语系，母语人数约2500万人（包括韩国语，约8000万人）。朝鲜语的前身是百济语、新罗语、古代高丽语，并受到扶余语的影响。中国延边、长白的朝鲜族人民以朝鲜语为母语，通用汉语汉字。"],
+                         [102.262004,27.882132,"彝语","彝语属于汉藏语系藏缅语族，现行的彝族文字是一种音节文字，形成于6千多年前，现代彝语有六种方言。有的方言虽然差别较大，但都有明显的共同历史渊源，一定数量彝语词汇借鉴了汉语成分。彝语原有一种音节文字，通称老彝文，大约形成于6000多年前。"],
+                         [108.297234,22.806493,"壮语","壮语，壮民族的语言，民间亦称“壮话”，壮语源于古代岭南原住民的语言。壮语属侗台语系(Tai-Kadai Languages)，也称侗傣语系。其主要分布于广西、云南文山和广东连山的壮族聚居地。壮语有南北两大方言，但语法结构、基本词汇大同小异。"],
+                         [114.415868,43.468238,"蒙古语","蒙古语（西里尔蒙古文：Монгол хэл 传统蒙文： ᠮᠤᠩᠭᠤᠯ ᠬᠡᠯᠡ）属阿尔泰语系蒙古语族，是黏着语。主要使用者在中国蒙古族聚居区、蒙古国和俄罗斯联邦西伯利亚联邦管区。蒙古国、俄罗斯地区和中国使用的蒙古语有着差异，其中中国内蒙古地区的蒙古族还在使用传统蒙古文。"]
+                        ];
+        var data_info2 = [[96.202544,35.499761,"青海藏语区"],[101.592952,24.864213,"云南迪庆藏族自治州 藏语区"],[102.89916,30.367481,"四川甘孜藏族自治州 藏语区"],
+                          [102.457625,38.103267,"甘肃省甘南藏族自治州 藏语区"],[122.753592,41.6216,"辽宁省 朝鲜族 朝鲜语"],[79.930239,37.116774,"和田地区 维吾尔语"],
+                          [88.891486,29.269023,"日喀则地区 维吾尔语"],[82.974881,46.758684,"塔城地区 哈萨克语"],[87.564988,43.84038," "],
+                          [87.296038,44.007058,"昌吉州 哈萨克语、维吾尔语等均有"],[82.052436,44.913651,"博尔塔拉州 蒙古语、哈萨克语、维吾尔语均有"],[81.297854,43.922248,"伊犁州 "],
+                          [104.089112,23.401781,"云南文山 壮语，苗语"],[106.734996,26.902826,"贵州 也有彝语"]
+                        ];
+
+        var opts = {
+            width:50,
+            height:250,
+            title:"充满活力的少数民族语言",
+            enableMessage:true  //允许窗口发送消息
+        };
+
+        var myIcon = new BMap.Icon("download/icon/like.png",new BMap.Size(32,32));
+
+        for(var i = 0; i < data_info.length;i++){
+            var marker = new BMap.Marker(new BMap.Point(data_info[i][0],data_info[i][1]),{icon:myIcon});
+            var content = "<h5 style = 'margin:0 0 5px;padding:0.2em 0;text-align:center'>" + data_info[i][2] + "</h5>"+
+                         "<p style = 'margin:0;line-height:1.5;font-size:14px;text-indent:2em'>" + data_info[i][3] + "</p>";
+            map.addOverlay(marker);
+            addClickHandler(content,marker);
+            //marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        }
+        function addClickHandler(content,marker){
+            marker.addEventListener("click",function(e){
+                openInfo(content,e)
+            });
+        }
+        function openInfo(content,e){
+            var p = e.target;
+            var point = new BMap.Point(p.getPosition().lng,p.getPosition().lat);
+            var infoWindow = new BMap.InfoWindow(content,opts);
+            map.openInfoWindow(infoWindow,point);
+        }
+
+        for(var i = 0; i < data_info2.length;i++){
+            var marker2 = new BMap.Marker(new BMap.Point(data_info2[i][0],data_info2[i][1]),{icon:myIcon});
+            map.addOverlay(marker2);
+            var opts2 = {position: new BMap.Point(data_info2[i][0],data_info2[i][1]),offset: new BMap.Size(15,3)}
+            var label = new BMap.Label(" " + data_info2[i][2],opts2);
+            label.setStyle({
+		        color : 'white',
+		        fontSize : '12px',
+                height : '22px',
+                width:'25px',
+		        lineHeight : '20px',
+                fontFamily: '宋体',
+                borderColor:"transparent",
+                backgroundColor:'transparent',//#B0C4DE
+                //borderRadius:'3px',
+                textAlign:'center',
+            });
+            marker2.setLabel(label);
+        }
+        //map.addEventListener("click",function(e){
+		//    alert('您所点击处经纬度为' + e.point.lng + "," + e.point.lat);
+	    //});
+
+
+    </script>
+    
+</body>
+</html>

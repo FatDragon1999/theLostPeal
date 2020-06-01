@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>接近濒危语言分布图</title>
+    <script src="download/font/iconfont.js"></script>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .anchorBL{
+            display: none;
+        }
+
+        li{
+	        list-style: none;
+        }
+        a{
+	        text-decoration: none;
+	        color: #666;
+        }
+        a:hover{
+	        color:transparent;
+        }
+        .toolbars{
+            position: fixed;
+            z-index: 3;
+	        top: 0;
+	        right: 0;
+	        height: 100%;
+	        width: 6px;
+	        background-color:transparent;
+        }
+        .toolbars ul{
+  	        position:absolute;
+  	        top: 60%;
+  	        right: 0;
+  	        transform: translate(0,-40%);
+  	        z-index: 3;
+        }
+        .toolbars ul li{
+	        width: 34px;
+	        height: 35px;
+	        margin-bottom: 2px;
+	        background-color:#B0C4DE;
+	        position: relative;
+        }
+	    /*鼠标悬浮后伸出的部分*/
+        .toolbars .flex{
+	        position: absolute;
+	        top: 0;
+	        right: 34px;
+	        width: 0;
+	        overflow: hidden;
+	        height: 35px;
+	        line-height: 35px;
+	        background-color:transparent;
+	        text-align: center;	
+	        color: #fff;
+	        z-index: -1;
+	        transition: width .3s;
+        }
+	    /*鼠标悬浮后的效果*/
+        .toolbars ul li:hover{
+	        background-color: transparent;
+        }
+        .toolbars ul li:hover .flex{
+	        width: 65px;
+	        background-color:transparent;
+        }
+        .toolbars ul li:hover i{
+	        display: none;
+        }
+
+        /*@font-face {
+            font-family: 'iconfont';
+            src: url('iconfont.eot');
+            src: url('iconfont.eot?#iefix') format('embedded-opentype'),
+            url('iconfont.woff2') format('woff2'),
+            url('iconfont.woff') format('woff'),
+            url('iconfont.ttf') format('truetype'),
+            url('iconfont.svg#iconfont') format('svg');
+        }
+
+        .iconfont {
+            font-family: "iconfont" !important;
+            text-align: left;
+            font-size: 40px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }*/
+
+        .icon {
+            width: 1em;
+            height: 1em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+            font-size: 34px;
+            text-align: center;
+        }
+
+        .myTitle{
+			z-index: 9999;
+		    background-color: transparent;
+			color:white;
+			font-family: '宋体';
+			font-size: 20px;
+			position: absolute;
+			left: 34%;
+			top: 6%;
+            text-shadow: 2px 2px 2px #E6E6FA;
+		}
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <p class="myTitle">散落的明珠——活力较差的少数民族语言分布地图</p>
+    <div class="toolbars">
+        <ul>
+            <li class="ENG">
+                <i></i>
+                <a class="toolbars-ico" href="#"><svg class = "icon" aria-hidden="true"><use xlink:href="#icon-star--filled"></use></svg></a>
+                <a class="flex" href="aliveLang.html">充满活力</a>
+            </li>
+            <li class="HALF">
+                <a class="toolbars-ico" href="#"><svg class = "icon" aria-hidden="true"><use xlink:href="#icon-star--half"></use></svg></a>
+                <a class="flex" href="test2.html">返回</a>
+            </li>
+            <li class="ALMOST">
+                <a class="toolbars-ico" href="#"><svg class = "icon" aria-hidden="true"><use xlink:href="#icon-star"></use></svg></a>
+                <a class="flex" href="almostDL.html">接近濒危</a>
+            </li>
+        </ul>	    	
+    </div>
+    <div id="map"></div>
+    <canvas id="canvas"></canvas>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=1XjLLEhZhQNUzd93EjU5nOGQ"></script>
+    <script type="text/javascript" src="build/mapv.js"></script>
+    <script type="text/javascript">
+
+        // 百度地图API功能
+        var map = new BMap.Map("map", {
+            enableMapClick: false
+        });    // 创建Map实例
+        map.centerAndZoom(new BMap.Point(105.403119, 38.028658), 5);  // 初始化地图,设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+
+        map.setMapStyle({
+        styleJson: [
+              {
+                   "featureType": "water",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#044161"
+                   }
+              },
+              {
+                   "featureType": "land",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#064f85"
+                   }
+              },
+              {
+                   "featureType": "railway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#005b96",
+                        "lightness": 1
+                   }
+              },
+              {
+                   "featureType": "highway",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry",
+                   "stylers": {
+                        "color": "#004981"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#00508b"
+                   }
+              },
+              {
+                   "featureType": "poi",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "green",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#056197",
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "subway",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "manmade",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "local",
+                   "elementType": "all",
+                   "stylers": {
+                       "color": "#115d97",
+                       "visibility": "on"
+                   }
+              },
+              {
+                   "featureType": "arterial",
+                   "elementType": "labels",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                   "featureType": "boundary",
+                   "elementType": "geometry.fill",
+                   "stylers": {
+                        "color": "#029fd4"
+                   }
+              },
+              {
+                   "featureType": "building",
+                   "elementType": "all",
+                   "stylers": {
+                        "color": "#1a5787"
+                   }
+              },
+              {
+                   "featureType": "label",
+                   "elementType": "all",
+                   "stylers": {
+                        "visibility": "off"
+                   }
+              },
+              {
+                    "featureType": "local",
+                    "elementType": "labels",
+                    "stylers": {
+                        "visibility": "off"
+                    }
+              }
+        ]
+    });
+
+    map.setMapStyle({
+            style: 'midnight'
+        });
+
+
+        var randomCount = 1000;
+
+        var data2 = [];
+
+        var citys = ["南宁","北京","天津","上海","重庆","石家庄","太原","呼和浩特","哈尔滨","长春","沈阳","济南","南京","合肥","杭州","南昌","福州","郑州","武汉","长沙","广州","南宁","西安","银川","兰州","西宁","乌鲁木齐","成都","贵阳","昆明","拉萨","海口","阿克苏地区"];
+
+        //*******濒危边缘**********//
+        // 羌语 阿坝州", g: "102.228565,31.905763
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [102.228565,31.905763]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        var point = new BMap.Point(102.228565,31.905763);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(30, -50)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("羌语", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'25px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+	    });
+	    map.addOverlay(label);
+        // 达斡尔语 呼伦贝尔", g: "119.760822,49.201636
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [119.760822,49.201636]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        var point = new BMap.Point(119.760822,49.201636);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(15, -15)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("达斡尔语", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'50px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+        });
+        map.addOverlay(label);
+        // 达斡尔语 齐齐哈尔", g: "123.987289,47.3477
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [123.987289,47.3477]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        // 纳西语 "丽江", g: "100.229628,26.875351
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [100.229628,26.875351]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        var point = new BMap.Point(100.229628,26.875351);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(5, -5)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("纳西语", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'50px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+        });
+        map.addOverlay(label);
+        // 土家族 重庆", g: "106.530635,29.544606
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [106.530635 + Math.random() * 0.01,29.544606 + Math.random() * 0.01]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        var point = new BMap.Point(109.196161,27.726271);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(-10,-32)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("土家语", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'50px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+        });
+        map.addOverlay(label);
+        // 铜仁地区", g: "109.196161,27.726271
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [109.196161,27.726271]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        // 恩施", g: "109.517433,30.308978
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [109.517433,30.308978]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        // 宜昌", g: "111.310981,30.732758
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [111.310981,30.732758]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        // 湘西州", g: "109.745746,28.317951
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [109.745746,28.317951]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        //海东地区", g: "102.085207,36.51761
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [102.085207,36.51761]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        var point = new BMap.Point(102.085207,36.51761);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(5,-18)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("撒拉语 中国独有的突厥语族语言 ", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'36px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+        });
+        map.addOverlay(label);
+        //乌鲁木齐
+        data2.push({
+          geometry: {
+                type: 'Point',
+                coordinates: [87.564988,43.84038]
+            },
+            count: 80 * Math.random(), //濒危语言+活力语言
+            time: 80 * Math.random()
+        });
+        var point = new BMap.Point(87.564988,43.84038);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(5,-18)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("撒拉语", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'36px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+        });
+        map.addOverlay(label);
+        //海南", g: "109.733755,19.180501
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [109.733755,19.180501]
+            },
+            count: 50 * Math.random(),
+            time: 60 * Math.random()
+        });
+        var point = new BMap.Point(109.733755,19.180501);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(-15, -15)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("勉语 苗族语言", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'25px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+	    });
+	    map.addOverlay(label);
+        //"广东", g: "113.394818,23.408004
+        data2.push({
+            geometry: {
+                type: 'Point',
+                coordinates: [113.394818,23.408004]
+            },
+            count: 50 * Math.random(), //濒危+活力
+            time: 60 * Math.random()
+        });
+        var point = new BMap.Point(109.733755,19.180501);
+        var opts = {
+	        position : point,    // 指定文本标注所在的地理位置
+	        offset   : new BMap.Size(25, -48)    //设置文本偏移量
+	    }
+        var label = new BMap.Label("勉语 主要分布于海南广东", opts);  // 创建文本标注对象
+	    label.setStyle({
+		    color : 'white',
+		    fontSize : '12px',
+            height : '22px',
+            width:'25px',
+		    lineHeight : '20px',
+            fontFamily: '宋体',
+            borderColor:"#B0C4DE",
+            backgroundColor:'transparent',//#B0C4DE
+            borderRadius:'3px',
+            textAlign:'center',
+	    });
+	    map.addOverlay(label);
+        var dataSet = new mapv.DataSet(data2);
+
+        var options2 = {
+            fillStyle: 'rgba(178,34,34,0.9)', //中心圆的颜色
+            maxSize: 10,
+          max: 30,
+          shadowBlur: 30,
+          shadowColor: 'rgba(165,42,42, 1)',
+            animation: {
+                type: 'time',
+                stepsRange: {
+                    start: 0,
+                    end: 100
+                },
+                trails: 10,
+                duration: 5,
+            },
+            draw: 'bubble'
+        }
+
+        var mapvLayer = new mapv.baiduMapLayer(map, dataSet, options2);
+
+    </script>
+    
+</body>
+</html>
