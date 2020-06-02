@@ -1,6 +1,29 @@
+var imgSrcArr = [
+        'img\\close.png',
+'img\\close.png',
+'img\\menu1text.png',
+'img\\少数民族\\北方.jpg',
+'img\\少数民族\\南方.jpg',
+'img\\少数民族\\藏族.jpg',
+'img\\少数民族\\西北.jpg',
+'img\\语言\\有危险-鄂温克族.jpg',
+'img\\语言\\活力-壮族.jpg',
+'img\\语言\\濒危-赫哲族.jpg',
+'img\\非遗\\北方——蒙古族呼麦.jpg',
+'img\\非遗\\南方——粤剧.jpg',
+'img\\非遗\\藏族——藏医.jpg',
+'img\\非遗\\西北——木卡姆艺术.jpg',
+];
 
-var imgWrap = new Image();
-imgWrap.src = 'img';
+var imgWrap = [];
+
+function preloadImg(arr) {
+    for(var i =0; i< arr.length ;i++) {
+        imgWrap[i] = new Image();
+        imgWrap[i].src = arr[i];
+    }
+}
+preloadImg(imgSrcArr);
 
 function startsearch(){	
 	var incomeinform = document.getElementById("inputmymenu").value;
